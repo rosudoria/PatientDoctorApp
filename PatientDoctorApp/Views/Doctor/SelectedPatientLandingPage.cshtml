@@ -1,0 +1,241 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Patient Profile</title>
+    <style>
+    
+        html{
+        height: 100vh;
+        }
+        body{
+        height: 85vh;
+        }
+        #heading{
+            text-align: center;
+            font-size: x-large ;
+            height: 10%;
+        }
+        
+        .parent {
+        display: grid;
+        grid-template-columns: 2fr 1.5fr;
+        grid-template-rows: 1fr 2.5fr;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        padding: 20px;
+        height: 80%;
+        width: 80%;
+        margin: auto;
+        }
+        .div1 { grid-area: 1 / 1 / 2 / 2; }
+        .div2 { grid-area: 1 / 2 / 2 / 3; }
+        .div3 { grid-area: 2 / 1 / 3 / 2; }
+        .div4 { grid-area: 2 / 2 / 3 / 3; }    
+        
+        #ProfilePicImage{
+            border-radius: 50%;
+        }
+        
+        .div1 {
+        display: flex;
+        }
+        #ProfilePic {
+            align-items: center;
+            display: inline-flex;
+            }
+        #ProfileInfo { 
+            display: flex ;
+            justify-content: left;
+            align-items: center;
+            }
+        #ProfileName{
+        margin: 2px;
+        font-size: larger;
+        }
+        #ProfileAge{
+        margin: 2px;
+        font-size: larger;
+        }
+        
+        .div3{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: fit-content;
+        }
+        #PatientStatusCard{
+            display: flex;
+            flex-direction: column;
+            background: #cbcbcb;
+            height: 100%;
+            width: 95%;
+            border-radius: 20px;
+            border: 1px solid #6c757d;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        #PatientCondition{
+            width: 100%;
+            height: fit-content;
+        }
+        #ConditionParagraph{
+            margin: 0 10px;
+            }
+        #Prescription{
+            width: 100%;
+            height: fit-content;
+        }
+        #PrescriptionList{
+            margin: 0 10px;
+            width: fit-content;
+        }
+        #Remarks{
+            width: 100%;
+            height: fit-content;
+        }
+        #RemarksParagraph{
+            margin: 0 10px;
+        }
+        
+        .div2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #NextMeetingWithPatientCard{
+            display: flex;
+            flex-direction: column;
+            background: #cbcbcb;
+            height: 80%;
+            width: fit-content;
+            padding-left: 35px;
+            padding-right: 35px;
+            border-radius: 20px;
+            border: 1px solid #6c757d;
+            text-align: center;
+            margin: auto;
+            align-items: center;
+        }
+        #NextMeetingHeading{
+        margin-bottom: 0;
+        }
+        #NextMeetingDate{
+        margin-bottom: 0;
+        }
+        
+        .div4{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #PatientRequests{
+            display: flex;
+            flex-direction: column;
+            background: #cbcbcb;
+            height: 50%;
+            width: 75%;
+            border-radius: 20px;
+            border: 1px solid #6c757d;
+            text-align: center;
+            margin:20px;
+        }
+        
+        #ButtonGroup{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 20px;
+            width: 75%;
+            height: 30%;
+        }
+        .PatientProfileButtons{
+            /*margin: 20px;*/
+            width: 100%;
+            height: 50%;
+            margin: 10px;
+            border: 2px solid #6c757d;
+            border-radius: 20px;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+    <div id="heading">
+        <h1>Patient Profile</h1>
+    </div>
+    <div class="parent">
+        <div class="div1">
+            <div id="ProfilePic">
+                <img id="ProfilePicImage" src="https://via.placeholder.com/200" alt="Avatar"> 
+            </div>
+            <div id="ProfileInfo">
+                <div id="ProfileInfoInnerDiv">
+                    <p id="ProfileName">Name: John Doe</p>
+                    <p id="ProfileAge">Age: 30yrs</p>
+                </div>
+            </div>
+        </div>
+        <div class="div2">
+            <div id="NextMeetingWithPatientCard">
+                <h3 id="NextMeetingHeading">Next Meeting</h3>
+                <h4 id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</h4>
+                <h4 id="MeetingConfirmation">confirmed</h4>
+            </div>
+        </div>
+        <div class="div3">
+            <div id="PatientStatusCard">
+                <div id="PatientCondition">
+                    <h3 id="ConditionHeading">Patient Condition Status</h3>
+                    <p id="ConditionParagraph">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and scrambled it to make a type
+                        specimen book. It has survived not only five centuries, but also the leap 
+                        into electronic typesetting, remaining essentially unchanged.
+                    </p>
+                </div>
+                <div id="Prescription">
+                    <h3 id="PrescriptionHeading">Prescription</h3>
+                    <ol id="PrescriptionList">
+                        <li>Medicine 1</li>
+                        <li>Medicine 2</li>
+                        <li>Medicine 3</li>
+                    </ol>
+                </div>
+                <div id="Remarks">
+                    <h3>Remarks</h3>
+                    <p id="RemarksParagraph">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type.
+                </div>
+            </div>
+        </div>
+        <div class="div4">
+            <div id="PatientRequests">
+                <h3 id="PatientRequestHeading">Requests</h3>
+                <p id="PatientRequestParagraph">
+                    No requests from the Patient yet.
+                </p>
+            </div>
+            <div id="ButtonGroup">
+                <button id="ViewPatientHistory" class="PatientProfileButtons">
+                    View Patient History
+                </button>
+                <button id="UploadDocuments" class="PatientProfileButtons">
+                    Upload Documents
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

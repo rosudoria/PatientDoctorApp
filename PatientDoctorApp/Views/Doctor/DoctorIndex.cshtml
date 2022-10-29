@@ -1,12 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Doctors Page";
 }
-
-<div class="text-center">
+<div class="text-center" style="{}">
     <h1 class="display-4">Welcome to Doctors Home</h1>
     <div class="container-fluid">
         <button type="button" class="btn btn-primary">My Schedule</button>
-        <button type="button" class="btn btn-primary">My Patients</button>
-        <button type="button" class="btn btn-primary">My Profile</button>
+        <button type="button" class="btn btn-primary" 
+                onclick="window.location= '@Url.Action( "SelectPatient", "Doctor")'">
+            My Patients
+        </button>
+        <button type="button" class="btn btn-primary" 
+                onclick="window.location= '@Url.Action("DoctorProfile", "Doctor")'">
+            My Profile
+        </button>
     </div>
 </div>
