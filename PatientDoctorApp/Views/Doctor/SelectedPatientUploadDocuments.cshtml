@@ -1,4 +1,6 @@
-﻿@{
+﻿
+@{
+    ViewBag.Title = "Upload Documents";
     Layout = null;
 }
 
@@ -8,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Patient Profile</title>
+    <title>Upload Documents</title>
     <style>
         html{
         height: 100vh;
@@ -28,8 +30,8 @@
         
         .parent {
         display: grid;
-        grid-template-columns: 2fr 1.5fr;
-        grid-template-rows: 1fr 2.5fr;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
         grid-column-gap: 20px;
         grid-row-gap: 20px;
         padding: 20px;
@@ -39,8 +41,6 @@
         }
         .div1 { grid-area: 1 / 1 / 2 / 2; }
         .div2 { grid-area: 1 / 2 / 2 / 3; }
-        .div3 { grid-area: 2 / 1 / 3 / 2; }
-        .div4 { grid-area: 2 / 2 / 3 / 3; }    
         
         #ProfilePicImage{
             border-radius: 50%;
@@ -67,7 +67,7 @@
         font-size: larger;
         }
         
-        .div3{
+/*        .div3{
             display: flex;
             justify-content: center;
             align-items: center;
@@ -105,7 +105,7 @@
         }
         #RemarksParagraph{
             margin: 0 10px;
-        }
+        }*/
         
         .div2{
             display: flex;
@@ -133,7 +133,7 @@
         margin-bottom: 0;
         }
         
-        .div4{
+/*        .div4{
             display: flex;
             justify-content: center;
             align-items: center;
@@ -161,13 +161,72 @@
             height: 30%;
         }
         .PatientProfileButtons{
-            /*margin: 20px;*/
+            !*margin: 20px;*!
             width: 100%;
             height: 50%;
             margin: 10px;
             border: 2px solid #6c757d;
             border-radius: 20px;
             font-size: larger;
+        }*/
+        
+        .UploadCard{
+            display: flex;
+            flex-direction: column;
+            background: #cbcbcb;
+            height: fit-content;
+            width: 80%;
+            border-radius: 20px;
+            border: 1px solid #6c757d;
+            text-align: center;
+            margin: auto;
+            align-items: center;
+        }
+        #UploadDocumentsHeading{
+            margin-bottom: 0;
+            width: 100%;
+            border-bottom: 1px solid #6c757d;
+        }
+        #UploadComponents
+        {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: fit-content ;
+            margin: auto;
+        }
+        #SelectUploadType{
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: center;
+            width: fit-content;
+            height: 100%;
+            padding: 0 20px;
+            border-right: 1px solid #6c757d;
+        }
+        #UploadDocumentRightSide{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            height: 100%;
+            padding: 0 20px;
+        }
+        .RadioGroup{
+            font-size: larger;
+        }
+        #UploadButton{
+            width: 100%;
+            height: 50%;
+            margin: 10px;
+            border: 2px solid #6c757d;
+            border-radius: 20px;
+            font-size: larger;
+            padding: 10px 0;
         }
     </style>
 </head>
@@ -175,26 +234,26 @@
     <div id="heading">
         <h1>Patient Profile</h1>
     </div>
-    <div class="parent">
-        <div class="div1">
-            <div id="ProfilePic">
-                <img id="ProfilePicImage" src="https://via.placeholder.com/200" alt="Avatar"> 
-            </div>
-            <div id="ProfileInfo">
-                <div id="ProfileInfoInnerDiv">
-                    <p id="ProfileName">Name: John Doe</p>
-                    <p id="ProfileAge">Age: 30yrs</p>
-                </div>
+<div class="parent">
+    <div class="div1">
+        <div id="ProfilePic">
+            <img id="ProfilePicImage" src="https://via.placeholder.com/200" alt="Avatar"> 
+        </div>
+        <div id="ProfileInfo">
+            <div id="ProfileInfoInnerDiv">
+                <p id="ProfileName">Name: John Doe</p>
+                <p id="ProfileAge">Age: 30yrs</p>
             </div>
         </div>
-        <div class="div2">
-            <div id="NextMeetingWithPatientCard">
-                <h3 id="NextMeetingHeading">Next Meeting</h3>
-                <h4 id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</h4>
-                <h4 id="MeetingConfirmation">confirmed</h4>
-            </div>
+    </div>
+    <div class="div2">
+        <div id="NextMeetingWithPatientCard">
+            <h3 id="NextMeetingHeading">Next Meeting</h3>
+            <h4 id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</h4>
+            <h4 id="MeetingConfirmation">confirmed</h4>
         </div>
-        <div class="div3">
+    </div>
+    @*<div class="div3">
             <div id="PatientStatusCard">
                 <div id="PatientCondition">
                     <h3 id="ConditionHeading">Patient Condition Status</h3>
@@ -239,7 +298,39 @@
                     Upload Documents
                 </button>
             </div>
+        </div>*@
+</div>
+<div class="UploadCard">
+    <div id="UploadDocumentsHeading">
+        <h2>Upload Documents</h2>
+    </div>
+    <div id="UploadComponents">
+        <div id="SelectUploadType">
+            <h3>Select Upload Type</h3>
+            <div class="RadioGroup">
+                <input type="radio" id="TestReport" name="TestReport" value="TestReport"/>
+                <label for="TestReport">Test Report</label>
+            </div>
+            <div class="RadioGroup">
+                <input type="radio" id="Note" name="Note" value="Note"/>
+                <label for="Note">Note</label>
+            </div>
+            <div class="RadioGroup">
+                <input type="radio" id="Diagnosis" name="Diagnosis" value="Diagnosis"/>
+                <label for="Diagnosis">Diagnosis</label>
+            </div>
+        </div>
+        <div id="UploadDocumentRightSide">
+            <h3 id="DocumentType">Document Type</h3>
+            <p id="LastAvailableInfo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                It has survived not only five centuries, but also the leap into electronic typesetting.
+            </p>
+            <button id="UploadButton">Upload Something</button>
+            
         </div>
     </div>
+</div>
 </body>
 </html>
