@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "SelectedPatientUploadTestReport";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload Test Report</title>
+    <style>
+        #UploadTestReportCard{
+            width: 60vh;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        #Heading{
+            text-align: center;
+        }
+        
+        form{
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
+            width: 60vh;
+        }
+        
+        .FormItem{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: larger;
+            margin: 5px;
+        }
+        
+        #UploadButton{
+            margin: 20px auto;
+            width: fit-content;
+            padding: 5px 20px;
+            font-size: larger;
+            border: 2px solid #58bd5a;
+            border-radius: 10px;
+            background-color: white;
+            }
+        #UploadButton:hover {
+              background-color: #4CAF50;
+              color: white;
+            }
+        #UploadButtonContainer{
+            display: flex;
+            justify-content: center;
+        }
+        
+        #CancelButton{
+            margin: auto;
+            width: fit-content;
+            padding: 3px 10px;
+            font-size: medium;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: white;
+        }
+        #CancelButton:hover {
+              background-color: red;
+              color: white;
+            }
+        
+    </style>
+  </head>
+<body>
+<div id="UploadTestReportCard">
+    <h1 id="Heading">Upload Test Report</h1>
+    <form method="post" enctype="multipart/form-data">
+        <div class="FormItem">
+            <label for="TitleOfTheReport">Title of the Report</label>
+            <input type="text" name="TitleOfTheReport" id="TitleOfTheReport"/>
+        </div>
+        <div class="FormItem">
+            <label for="Date">Date</label>
+            <input type="date" name="Date" id="Date"/>
+        </div>
+        <div class="FormItem">
+            <label for="Result">Test Result</label>
+            <input type="text" name="Result" id="Result"/>
+        </div>
+        <div class="FormItem">
+            <label for="TestReport">Test Report</label>
+            <input type="file" name="TestReport" id="TestReport"/>
+        </div>
+        <div class="FormItem">
+            <label for="Signature">Add Signature</label>
+            <input type="button" value="Add Signature" id="Signature" name="Signature"/>
+        </div>
+        <div id="UploadButtonContainer">
+            <input type="submit" value="Upload" id="UploadButton"/>
+        </div>
+    </form>
+    <button id="CancelButton"
+            onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+         Cancel
+    </button>
+</div>
+
+</body>
+</html>
