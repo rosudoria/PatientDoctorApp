@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "SelectedPatientUploadNote";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload Notes</title>
+    <style>
+        #UploadNoteCard{
+            width: 60vh;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        #Heading{
+            text-align: center;
+            margin-top: 0;
+        }
+        #EnterNotesHeading{
+            text-align: left;
+            margin-bottom: 0;
+            font-size: larger;
+        }
+        #TextAreaForm{
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            width: 60vh;
+        }
+        #EnterNotesTextArea{
+            margin: 20px auto;
+            margin-bottom: 0px;
+            width: 60vh;
+            height: 20vh;
+            font-size: larger;
+        }
+        #AddSignatureLabel{
+            margin: 20px auto;
+            width: 60vh;
+            font-size: larger;
+        }
+        #AddSignature{
+            margin: 20px auto;
+            width: fit-content;
+            padding: 3px 20px;
+            font-size: small;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: black 0px 0px 3px;
+            }
+        #AddSignature:hover {
+              background-color: black;
+              color: white;
+            }
+        #UploadNotesButton{
+            margin: 20px auto;
+            margin-top: 10px;
+            width: fit-content;
+            padding: 5px 20px;
+            font-size: larger;
+            border: 2px solid #58bd5a;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: #58bd5a 0 0 10px;
+            }
+        #UploadNotesButton:hover {
+              background-color: #4CAF50;
+              color: white;
+            }
+            
+        #CancelButton{
+            margin: auto;
+            width: fit-content;
+            padding: 3px 10px;
+            font-size: medium;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: red 0 0 10px;
+            }
+        #CancelButton:hover {
+              background-color: red;
+              color: white;
+            }
+    </style>
+  </head>
+<body>
+<div id="UploadNoteCard">
+    <h1 id="Heading">Upload Notes</h1>
+    <div id="InnerUploadDiv">
+        <form id="TextAreaForm">
+            <div>
+                <label for="EnterNotesTextArea" id="EnterNotesHeading">Enter Notes:</label>
+                <textarea id="EnterNotesTextArea" name="EnterNotesTextArea" rows="5" cols="70"></textarea>
+
+            </div>
+            <div id="AddSignatureDiv">
+                <label for="AddSignature" id="AddSignatureLabel">Add Signature:</label>
+                <input type="button" value="Add Signature" id="AddSignature" name="AddSignature"/>
+            </div>
+
+            <input type="submit" value="Upload Notes" id="UploadNotesButton"/>
+        </form>
+        <button id="CancelButton" 
+                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+            Cancel
+        </button>
+        
+        
+    </div>
+</div>
+</body>
+</html>

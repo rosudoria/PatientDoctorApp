@@ -33,5 +33,10 @@ namespace PatientDoctorApp.Controllers
         {
             return View();
         }
+
+        public IActionResult SelectedPatientUploadNote()
+        {
+            return View();
+        }
     }
 }
