@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "SelectedPatientUploadDiagnosis";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload Diagnosis</title>
+    <style>
+        #UploadDiagnosisCard{
+            width: 60vh;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        #Heading{
+            text-align: center;
+        }
+        
+        #UploadDiagnosisForm{
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
+            width: 60vh;
+        }
+        
+        label{
+            font-size: larger;
+            margin: 5px;
+        }
+        
+        .FormItem{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin: 5px;
+            font-size: medium;
+        }
+        #UploadDiagnosisButton{
+            margin: 20px auto;
+            width: fit-content;
+            padding: 5px 20px;
+            font-size: larger;
+            border: 2px solid #58bd5a;
+            border-radius: 10px;
+            background-color: white;
+        }
+        #UploadDiagnosisButton:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #CancelButton{
+            margin: auto;
+            width: fit-content;
+            padding: 3px 10px;
+            font-size: medium;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: white;
+        }
+        #CancelButton:hover {
+            background-color: red;
+            color: white;
+        }
+        /*#AddSignature{
+            font-size: medium;
+            border: 2px solid #58bd5a;
+            border-radius: 10px;
+            background-color: white;
+            }
+        #AddSignature:hover {
+              background-color: #4CAF50;
+              color: white;
+            }*/
+        
+        
+    </style>
+  </head>
+<body>
+<div id="UploadDiagnosisCard">
+    <h1 id="Heading">
+        Upload Patient Diagnosis
+    </h1>
+    <div id="InnerUploadCard">
+        <form id="UploadDiagnosisForm">
+            <div id="UploadFiles" class="FormItem">
+                <label for="UploadFile">Upload File</label>
+                <input type="file" id="UploadFile" name="UploadFile" accept=".pdf">
+            </div>
+            <div id="AddSignatureDiv" class="FormItem">
+                <label for="AddSignature">Add Signature</label>
+                <input type="button" id="AddSignature" name="AddSignature" value="Add Signature">
+            </div>
+            <input type="submit" value="Upload Diagnosis" id="UploadDiagnosisButton"/>
+        </form>
+        <button id="CancelButton"
+                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">Cancel</button>
+    </div>
+</div>
+</body>
+</html>
