@@ -10,6 +10,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Upload Test Report</title>
+    <script>
+        function AddSignature(){
+            if (document.getElementById("Signature").innerHTML === "verified"){
+            }
+            else{
+                let signature = prompt("Please enter your signature", "Enter Signature");
+                if (signature === "Password") {
+                    let Signature = document.getElementById("Signature");
+                    Signature.innerHTML = "verified";
+                    Signature.style.color = "green";
+                    Signature.style.border = "0";
+                    Signature.style.backgroundColor = "white";
+                }
+                else {
+                    alert("Wrong Password");
+                }
+            }
+        }
+        
+        function checkUpload(){
+            if (document.getElementById("Signature").innerHTML === "verified"){
+                return true;
+            }
+            else{
+                alert("Please verify your signature");
+                return false;
+            }
+        }
+    </script>
     <style>
         #UploadTestReportCard{
             width: 60vh;
@@ -67,13 +96,25 @@
               background-color: red;
               color: white;
             }
+        #Signature{
+            border: 2px solid black;
+            border-radius: 10px;
+            text-align: center;
+        }
+        #Signature:hover{
+            cursor: pointer;
+            background-color: black;
+            color: white;
+        }
         
     </style>
   </head>
 <body>
 <div id="UploadTestReportCard">
     <h1 id="Heading">Upload Test Report</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" 
+          onsubmit="return checkUpload()"
+          >
         <div class="FormItem">
             <label for="TitleOfTheReport">Title of the Report</label>
             <input type="text" name="TitleOfTheReport" id="TitleOfTheReport"/>
@@ -92,10 +133,12 @@
         </div>
         <div class="FormItem">
             <label for="Signature">Add Signature</label>
-            <input type="button" value="Add Signature" id="Signature" name="Signature"/>
+            <label value="Add Signature" id="Signature" name="Signature" 
+                   onclick="AddSignature()"
+                   >Add Signature</label>
         </div>
         <div id="UploadButtonContainer">
-            <input type="submit" value="Upload" id="UploadButton"/>
+            <input type="submit" value="Upload" id="UploadButton" />
         </div>
     </form>
     <button id="CancelButton"
