@@ -1,16 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "SelectedPatientUploadNote";
-    Layout = null;
+    ViewBag.Title = "Upload Note";
 }
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    @*<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Upload Notes</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">*@
     <script>
         function AddSignature(){
             if (document.getElementById("AddSignature").innerHTML === "verified"){
@@ -66,13 +64,6 @@
             margin: 0 auto;
             width: 60vh;
         }
-        #EnterNotesTextArea{
-            margin: 20px auto;
-            margin-bottom: 0px;
-            width: 60vh;
-            height: 20vh;
-            font-size: larger;
-        }
         #AddSignatureLabel{
             margin: 20px auto;
             width: 60vh;
@@ -86,15 +77,14 @@
             border: 2px solid black;
             border-radius: 10px;
             background-color: white;
-            box-shadow: black 0px 0px 3px;
+            box-shadow: black 0 0 3px;
             }
         #AddSignature:hover {
               background-color: black;
               color: white;
             }
         #UploadNotesButton{
-            margin: 20px auto;
-            margin-top: 10px;
+            margin: 10px auto 20px;
             width: fit-content;
             padding: 5px 20px;
             font-size: larger;
@@ -122,19 +112,37 @@
               background-color: red;
               color: white;
             }
-        #AddSignatureDiv {
-            margin: 20px 0;
-            }
-    </style>
+        #AddSignatureDiv{
+            display: flex;
+            flex-direction: row;
+        }
+        #AddSignatureLabel{
+            width: fit-content;
+            margin-left: 0;
+            margin-right: 20px;
+        }
+        #AddSignature{
+            width: fit-content;
+            margin-left: 0;
+            margin-right: 20px;
+        }
+            
+        #TextAreaDiv{
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+        }
+    </style><title></title>
   </head>
 <body>
 <div id="UploadNoteCard">
     <h1 id="Heading">Upload Notes</h1>
     <div id="InnerUploadDiv">
         <form id="TextAreaForm" onsubmit="return checkUpload()">
-            <div>
+            <div id="TextAreaDiv">
                 <label for="EnterNotesTextArea" id="EnterNotesHeading">Enter Notes:</label>
-                <textarea id="EnterNotesTextArea" name="EnterNotesTextArea" rows="5" cols="70"></textarea>
+                <textarea id="EnterNotesTextArea" name="EnterNotesTextArea" rows="5" cols="50"></textarea>
 
             </div>
             <div id="AddSignatureDiv">
