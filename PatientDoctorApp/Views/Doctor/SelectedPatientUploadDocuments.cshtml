@@ -229,6 +229,34 @@
             padding: 10px 0;
         }
     </style>
+    <script>
+    
+    function changeUploadButton(radio_button){
+        let upload_button = document.getElementById("UploadButton");
+        if(radio_button.value === "TestReport"){
+            document.getElementById("UploadButton").innerHTML = "Upload Test Report";
+            document.getElementById("DocumentType").innerHTML = "Test Report";
+            document.getElementById("UploadButton").addEventListener("click", function(){
+                window.location.href = '@Url.Action("SelectedPatientUploadTestReport", "Doctor")';
+            });
+
+        }
+        else if(radio_button.value === "Note"){
+            document.getElementById("UploadButton").innerHTML = "Upload Note";
+            document.getElementById("DocumentType").innerHTML = "Note";
+            document.getElementById("UploadButton").addEventListener("click", function(){
+                            window.location.href = '@Url.Action("SelectedPatientUploadNote", "Doctor")';
+            });
+        }
+        else if(radio_button.value === "Diagnosis"){
+            document.getElementById("UploadButton").innerHTML = "Upload Diagnosis";
+            document.getElementById("DocumentType").innerHTML = "Diagnosis";
+            document.getElementById("UploadButton").addEventListener("click", function(){
+                window.location.href = '@Url.Action("SelectedPatientUploadDiagnosis", "Doctor")';
+            });
+        }
+    }
+    </script>
 </head>
 <body>
     <div id="heading">
@@ -308,26 +336,34 @@
         <div id="SelectUploadType">
             <h3>Select Upload Type</h3>
             <div class="RadioGroup">
-                <input type="radio" id="TestReport" name="TestReport" value="TestReport"/>
+                <input type="radio" id="TestReport" name="radioButton" value="TestReport" 
+                       onclick="changeUploadButton(this)" checked=""/>
                 <label for="TestReport">Test Report</label>
             </div>
             <div class="RadioGroup">
-                <input type="radio" id="Note" name="Note" value="Note"/>
+                <input type="radio" id="Note" name="radioButton" value="Note" 
+                       onclick="changeUploadButton(this)"
+                       />
                 <label for="Note">Note</label>
             </div>
             <div class="RadioGroup">
-                <input type="radio" id="Diagnosis" name="Diagnosis" value="Diagnosis"/>
+                <input type="radio" id="Diagnosis" name="radioButton" value="Diagnosis" 
+                       onclick="changeUploadButton(this)"
+                       />
                 <label for="Diagnosis">Diagnosis</label>
             </div>
         </div>
         <div id="UploadDocumentRightSide">
-            <h3 id="DocumentType">Document Type</h3>
+            <h3 id="DocumentType">Test Report</h3>
             <p id="LastAvailableInfo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
                 It has survived not only five centuries, but also the leap into electronic typesetting.
             </p>
-            <button id="UploadButton" onclick="window.location= '@Url.Action("SelectedPatientUploadTestReport", "Doctor")'">Upload Something</button>
+            <button id="UploadButton" 
+                    onclick="window.location= '@Url.Action("SelectedPatientUploadTestReport", "Doctor")'">
+                Upload Test Report
+            </button>
             
         </div>
     </div>
