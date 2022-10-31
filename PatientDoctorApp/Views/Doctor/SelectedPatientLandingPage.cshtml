@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "Patient Home";
 }
 
 <!DOCTYPE html>
@@ -123,10 +123,10 @@
             border-radius: 20px;
             border: 1px solid #6c757d;
             text-align: center;
-            margin: auto;
             align-items: center;
         }
         #NextMeetingHeading{
+        margin-top: 10px;
         margin-bottom: 0;
         }
         #NextMeetingDate{
@@ -150,6 +150,10 @@
             text-align: center;
             margin:20px;
         }
+        #PatientRequestHeading{
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
         
         #ButtonGroup{
             display: flex;
@@ -169,16 +173,21 @@
             border-radius: 20px;
             font-size: larger;
         }
+        footer{
+            position: fixed;
+        }
     </style>
 </head>
 <body>
     <div id="heading">
+        @*
         <h1>Patient Profile</h1>
+    *@
     </div>
     <div class="parent">
         <div class="div1">
             <div id="ProfilePic">
-                <img id="ProfilePicImage" src="https://via.placeholder.com/200" alt="Avatar"> 
+                <img id="ProfilePicImage" src="https://via.placeholder.com/130" alt="Avatar"> 
             </div>
             <div id="ProfileInfo">
                 <div id="ProfileInfoInnerDiv">
@@ -189,40 +198,39 @@
         </div>
         <div class="div2">
             <div id="NextMeetingWithPatientCard">
-                <h3 id="NextMeetingHeading">Next Meeting</h3>
-                <h4 id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</h4>
-                <h4 id="MeetingConfirmation">confirmed</h4>
+                <h4 id="NextMeetingHeading">Next Meeting</h4>
+                <p id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</p>
+                <p id="MeetingConfirmation">confirmed</p>
             </div>
         </div>
-        <div class="div3">
-            <div id="PatientStatusCard">
-                <div id="PatientCondition">
-                    <h3 id="ConditionHeading">Patient Condition Status</h3>
-                    <p id="ConditionParagraph">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and scrambled it to make a type
-                        specimen book. It has survived not only five centuries, but also the leap 
-                        into electronic typesetting, remaining essentially unchanged.
-                    </p>
-                </div>
-                <div id="Prescription">
-                    <h3 id="PrescriptionHeading">Prescription</h3>
-                    <ol id="PrescriptionList">
-                        <li>Medicine 1</li>
-                        <li>Medicine 2</li>
-                        <li>Medicine 3</li>
-                    </ol>
-                </div>
-                <div id="Remarks">
-                    <h3>Remarks</h3>
-                    <p id="RemarksParagraph">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type.
-                </div>
+    <div class="div3">
+        <div id="PatientStatusCard">
+            <div id="PatientCondition">
+                <h3 id="ConditionHeading">Patient Condition Status</h3>
+                <p id="ConditionParagraph">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type
+                    specimen book.
+                </p>
+            </div>
+            <div id="Prescription">
+                <h3 id="PrescriptionHeading">Prescription</h3>
+                <ol id="PrescriptionList">
+                    <li>Medicine 1</li>
+                    <li>Medicine 2</li>
+                    <li>Medicine 3</li>
+                </ol>
+            </div>
+            <div id="Remarks">
+                <h3>Remarks</h3>
+                <p id="RemarksParagraph">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
             </div>
         </div>
+        
+    </div>
         <div class="div4">
             <div id="PatientRequests">
                 <h3 id="PatientRequestHeading">Requests</h3>
@@ -240,6 +248,6 @@
                 </button>
             </div>
         </div>
-    </div>
+        </div>
 </body>
 </html>
