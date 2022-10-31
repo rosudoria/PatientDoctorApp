@@ -10,6 +10,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Upload Diagnosis</title>
+    <script>
+        function AddSignature(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+            }
+            else{
+                let signature = prompt("Please enter your signature", "Enter Signature");
+                if (signature === "Password") {
+                    let Signature = document.getElementById("AddSignature");
+                    Signature.innerHTML = "verified";
+                    Signature.style.color = "green";
+                    Signature.style.border = "0";
+                    Signature.style.backgroundColor = "white";
+                    Signature.style.boxShadow = "0 0 0 0";
+                    Signature.style.fontSize = "larger";
+                    
+                }
+                else {
+                    alert("Wrong Password");
+                }
+            }
+        }
+         
+        function checkUpload(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+                return true;
+            }
+            else{
+                alert("Please verify your signature");
+                return false;
+            }
+        }
+    </script>
     <style>
         #UploadDiagnosisCard{
             width: 60vh;
@@ -48,6 +80,7 @@
             border: 2px solid #58bd5a;
             border-radius: 10px;
             background-color: white;
+            box-shadow: 0 0 5px #58bd5a;
         }
         #UploadDiagnosisButton:hover {
             background-color: #4CAF50;
@@ -61,21 +94,25 @@
             border: 2px solid red;
             border-radius: 10px;
             background-color: white;
+            box-shadow: 0 0 5px red;
         }
         #CancelButton:hover {
             background-color: red;
             color: white;
         }
-        /*#AddSignature{
+        #AddSignature{
             font-size: medium;
-            border: 2px solid #58bd5a;
-            border-radius: 10px;
+            border: 2px solid black;
+            border-radius: 20px;
             background-color: white;
+            padding: 5px 0;
+            text-align: center;
+            box-shadow: 0 0 2px black;
             }
         #AddSignature:hover {
-              background-color: #4CAF50;
+              background-color: black;
               color: white;
-            }*/
+            }
         
         
     </style>
@@ -86,19 +123,23 @@
         Upload Patient Diagnosis
     </h1>
     <div id="InnerUploadCard">
-        <form id="UploadDiagnosisForm">
+        <form id="UploadDiagnosisForm" onsubmit="return checkUpload()">
             <div id="UploadFiles" class="FormItem">
                 <label for="UploadFile">Upload File</label>
                 <input type="file" id="UploadFile" name="UploadFile" accept=".pdf">
             </div>
             <div id="AddSignatureDiv" class="FormItem">
                 <label for="AddSignature">Add Signature</label>
-                <input type="button" id="AddSignature" name="AddSignature" value="Add Signature">
+                <label id="AddSignature" name="AddSignature" value="Add Signature" onclick="AddSignature()">
+                    Add Signature
+                </label>
             </div>
             <input type="submit" value="Upload Diagnosis" id="UploadDiagnosisButton"/>
         </form>
         <button id="CancelButton"
-                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">Cancel</button>
+                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+            Cancel
+        </button>
     </div>
 </div>
 </body>
