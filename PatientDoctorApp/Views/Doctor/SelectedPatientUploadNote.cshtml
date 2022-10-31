@@ -11,6 +11,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Upload Notes</title>
+    <script>
+        function AddSignature(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+            }
+            else{
+                let signature = prompt("Please enter your signature", "Enter Signature");
+                if (signature === "Password") {
+                    let Signature = document.getElementById("AddSignature");
+                    Signature.innerHTML = "verified";
+                    Signature.style.color = "green";
+                    Signature.style.border = "0";
+                    Signature.style.backgroundColor = "white";
+                    Signature.style.padding = "10";
+                    Signature.style.boxShadow = "0 0 0 0";
+                    Signature.style.fontSize = "medium";
+                }
+                else {
+                    alert("Wrong Password");
+                }
+            }
+        }
+         
+        function checkUpload(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+                return true;
+            }
+            else{
+                alert("Please verify your signature");
+                return false;
+            }
+        }
+    </script>
     <style>
         #UploadNoteCard{
             width: 60vh;
@@ -90,13 +122,16 @@
               background-color: red;
               color: white;
             }
+        #AddSignatureDiv {
+            margin: 20px 0;
+            }
     </style>
   </head>
 <body>
 <div id="UploadNoteCard">
     <h1 id="Heading">Upload Notes</h1>
     <div id="InnerUploadDiv">
-        <form id="TextAreaForm">
+        <form id="TextAreaForm" onsubmit="return checkUpload()">
             <div>
                 <label for="EnterNotesTextArea" id="EnterNotesHeading">Enter Notes:</label>
                 <textarea id="EnterNotesTextArea" name="EnterNotesTextArea" rows="5" cols="70"></textarea>
@@ -104,7 +139,9 @@
             </div>
             <div id="AddSignatureDiv">
                 <label for="AddSignature" id="AddSignatureLabel">Add Signature:</label>
-                <input type="button" value="Add Signature" id="AddSignature" name="AddSignature"/>
+                <label value="Add Signature" id="AddSignature" name="AddSignature" onclick="AddSignature()">
+                    Add Signature
+                </label>
             </div>
 
             <input type="submit" value="Upload Notes" id="UploadNotesButton"/>
