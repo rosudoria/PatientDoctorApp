@@ -4,9 +4,29 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Patient Home</h1>
-        <div class="container-fluid">
-        <button type="button" class="btn btn-primary">Request An Appointment</button>
-        <button type="button" class="btn btn-primary">View Appointments</button>
-        <button type="button" class="btn btn-primary">My Profile</button>
+    <div class="container-fluid">
+     <div class="card col-6 offset-3" style="width: 50%;">
+      <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Upcomming Appointment</h5>
+                <p class="card-text">type: IN-PERSON</p>
+        <p class="card-text">Date: 2022-11-01</p>
+        <p class="card-text">Time: 1:30pm - 2:30pm</p>
+        <p class="card-text">Doctor: Dr.Ross Geller</p>
+        <p class="card-text">Details: Second-degree burn</p>
+        <a href="#" class="btn btn-danger">Cancel</a>
+      </div>
+     </div>
+     <div class="d-grid gap-3">
+        <div class="col-md-auto m">
+          <a asp-area="" asp-controller="Patient" asp-action="RequestAppointment">Request An Appointment</a>
+        </div>
+        <div class="col-md-auto">
+          <a asp-area="" asp-controller="Patient" asp-action="ViewAppointments" >View Appointments</a>
+        </div>
+        <div class="col-md-auto">
+          <a asp-area="" asp-controller="Patient" asp-action="PatientProfile">My Profile</a>
+        </div>
+     <div/>
     </div>
 </div>
