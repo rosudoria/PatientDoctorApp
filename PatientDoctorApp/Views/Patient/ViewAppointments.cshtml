@@ -4,7 +4,7 @@
 
 <div class="text-center">
     <h1 class="display-4">View Past Appointments</h1>
-    <div class="col-6 offset-3" style="width: 50%">
+    <div id="appointment-table-container"class="col-6 offset-3" style="width: 50%">
         <table class="table">
          <thead>
          <tr>
@@ -29,7 +29,7 @@
           </tr>
          </tbody>
         </table>
-        <nav class="col-6 offset-3" style="width: 50%" aria-label="Page navigation example">
+        <nav id="pagination-nav" class="col-6 offset-3" style="width: 50%" aria-label="Page navigation example">
           <ul class="pagination">
            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
            <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -40,3 +40,17 @@
         </nav>
     </div>
 </div>
+
+<style>
+    body {
+        background: lightgrey;
+    }
+    #appointment-table-container {
+        background: white;
+        border-radius: 5px;
+        box-shadow: 3px 3px #888888;
+    }
+    #pagination-nav {
+        padding-bottom: 5px;
+    }
+</style>
