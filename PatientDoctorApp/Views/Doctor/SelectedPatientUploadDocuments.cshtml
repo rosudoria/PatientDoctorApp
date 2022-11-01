@@ -1,0 +1,261 @@
+﻿@using PatientDoctorApp.Controllers
+
+@{
+    ViewBag.Title = "Upload Documents";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload Documents</title>
+    <style>
+        html{
+        height: 90vh;
+        }
+        h1{
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+        body{
+        height: 80vh;
+        }
+        #heading{
+            text-align: center;
+            font-size: x-large ;
+            height: fit-content;
+        }
+        .parent{
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        /*.parent {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        padding: 20px;
+        height: fit-content;
+        width: 80%;
+        margin: auto;
+        }*//*
+        .div1 { grid-area: 1 / 1 / 2 / 2; }
+        .div2 { grid-area: 1 / 2 / 2 / 3; }*/
+        
+        #ProfilePicImage{
+            border-radius: 50%;
+        }
+        
+        .div1 {
+        display: flex;
+        margin-right: 150px;
+        }
+        #ProfilePic {
+            align-items: center;
+            display: inline-flex;
+            margin-right: 10px;
+            }
+        #ProfilePic:hover{
+                cursor: pointer;
+            }
+        #ProfileInfo { 
+            display: flex ;
+            justify-content: left;
+            align-items: center;
+            }
+        #ProfileName{
+        margin: 2px;
+        font-size: larger;
+        }
+        #ProfileAge{
+        margin: 2px;
+        font-size: larger;
+        }
+        .div2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #NextMeetingWithPatientCard{
+            display: flex;
+            flex-direction: column;
+            background: #cbcbcb;
+            height: 80%;
+            width: fit-content;
+            padding-left: 35px;
+            padding-right: 35px;
+            border-radius: 20px;
+            border: 1px solid #6c757d;
+            text-align: center;
+            margin: auto;
+            align-items: center;
+        }
+        #NextMeetingHeading{
+        margin-bottom: 0;
+        }
+        #NextMeetingDate{
+        margin-bottom: 0;
+        }
+        .UploadCard{
+            display: flex;
+            flex-direction: column;
+            background: #cbcbcb;
+            height: fit-content;
+            width: 75vh;
+            border-radius: 20px;
+            border: 1px solid #6c757d;
+            text-align: center;
+            margin: auto;
+            align-items: center;
+        }
+        #UploadDocumentsHeading{
+            margin-bottom: 0;
+            width: 100%;
+            border-bottom: 1px solid #6c757d;
+        }
+        #UploadComponents
+        {
+            display: grid;
+            grid-template-columns: 1fr 2.5fr;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: fit-content ;
+            margin: auto;
+        }
+        #SelectUploadType{
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: center;
+            width: fit-content;
+            height: 100%;
+            padding: 0 20px;
+            border-right: 1px solid #6c757d;
+        }
+        #UploadDocumentRightSide{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            height: 100%;
+            padding: 0 20px;
+        }
+        .RadioGroup{
+            font-size: larger;
+        }
+        #UploadButton{
+            width: 100%;
+            height: 50%;
+            margin: 10px;
+            border: 2px solid #6c757d;
+            border-radius: 20px;
+            font-size: larger;
+            padding: 10px 0;
+        }
+    </style>
+    <script>
+    
+    function changeUploadButton(radio_button){
+        let upload_button = document.getElementById("UploadButton");
+        if(radio_button.value === "TestReport"){
+            document.getElementById("UploadButton").innerHTML = "Upload Test Report";
+            document.getElementById("DocumentType").innerHTML = "Test Report";
+            document.getElementById("UploadButton").addEventListener("click", function(){
+                window.location.href = '@Url.Action("SelectedPatientUploadTestReport", "Doctor")';
+            });
+
+        }
+        else if(radio_button.value === "Note"){
+            document.getElementById("UploadButton").innerHTML = "Upload Note";
+            document.getElementById("DocumentType").innerHTML = "Note";
+            document.getElementById("UploadButton").addEventListener("click", function(){
+                            window.location.href = '@Url.Action("SelectedPatientUploadNote", "Doctor")';
+            });
+        }
+        else if(radio_button.value === "Diagnosis"){
+            document.getElementById("UploadButton").innerHTML = "Upload Diagnosis";
+            document.getElementById("DocumentType").innerHTML = "Diagnosis";
+            document.getElementById("UploadButton").addEventListener("click", function(){
+                window.location.href = '@Url.Action("SelectedPatientUploadDiagnosis", "Doctor")';
+            });
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="heading">
+        @*
+        <h1>Patient Profile</h1>
+    *@
+    </div>
+<div class="parent">
+    <div class="div1">
+        <div id="ProfilePic">
+            <img id="ProfilePicImage" src="https://via.placeholder.com/130" alt="Avatar" 
+                 onclick="window.location = '@Url.Action("SelectedPatientLandingPage", "Doctor")'"> 
+        </div>
+        <div id="ProfileInfo">
+            <div id="ProfileInfoInnerDiv">
+                <p id="ProfileName">Name: John Doe</p>
+                <p id="ProfileAge">Age: 30yrs</p>
+            </div>
+        </div>
+    </div>
+    <div class="div2">
+        <div id="NextMeetingWithPatientCard">
+            <h4 id="NextMeetingHeading">Next Meeting</h4>
+            <p id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</p>
+            <p id="MeetingConfirmation">confirmed</p>
+        </div>
+    </div>
+</div>
+<div class="UploadCard">
+    <div id="UploadDocumentsHeading">
+        <h2>Upload Documents</h2>
+    </div>
+    <div id="UploadComponents">
+        <div id="SelectUploadType">
+            <h3>Select Upload Type</h3>
+            <div class="RadioGroup">
+                <input type="radio" id="TestReport" name="radioButton" value="TestReport" 
+                       onclick="changeUploadButton(this)" checked=""/>
+                <label for="TestReport">Test Report</label>
+            </div>
+            <div class="RadioGroup">
+                <input type="radio" id="Note" name="radioButton" value="Note" 
+                       onclick="changeUploadButton(this)"
+                />
+                <label for="Note">Note</label>
+            </div>
+            <div class="RadioGroup">
+                <input type="radio" id="Diagnosis" name="radioButton" value="Diagnosis" 
+                       onclick="changeUploadButton(this)"
+                />
+                <label for="Diagnosis">Diagnosis</label>
+            </div>
+        </div>
+        <div id="UploadDocumentRightSide">
+            <h3 id="DocumentType">Test Report</h3>
+            <p id="LastAvailableInfo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                It has survived not only five centuries, but also the leap into electronic typesetting.
+            </p>
+            <button id="UploadButton" 
+                    onclick="window.location= '@Url.Action("SelectedPatientUploadTestReport", "Doctor")'">
+                Upload Test Report
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "Upload Note";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    @*<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">*@
+    <script>
+        function AddSignature(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+            }
+            else{
+                let signature = prompt("Please enter your signature", "Enter Signature");
+                if (signature === "Password") {
+                    let Signature = document.getElementById("AddSignature");
+                    Signature.innerHTML = "verified";
+                    Signature.style.color = "green";
+                    Signature.style.border = "0";
+                    Signature.style.backgroundColor = "white";
+                    Signature.style.padding = "10";
+                    Signature.style.boxShadow = "0 0 0 0";
+                    Signature.style.fontSize = "medium";
+                }
+                else {
+                    alert("Wrong Password");
+                }
+            }
+        }
+         
+        function checkUpload(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+                return true;
+            }
+            else{
+                alert("Please verify your signature");
+                return false;
+            }
+        }
+    </script>
+    <style>
+        #UploadNoteCard{
+            width: 60vh;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        #Heading{
+            text-align: center;
+            margin-top: 0;
+        }
+        #EnterNotesHeading{
+            text-align: left;
+            margin-bottom: 0;
+            font-size: larger;
+        }
+        #TextAreaForm{
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            width: 60vh;
+        }
+        #AddSignatureLabel{
+            margin: 20px auto;
+            width: 60vh;
+            font-size: larger;
+        }
+        #AddSignature{
+            margin: 20px auto;
+            width: fit-content;
+            padding: 3px 20px;
+            font-size: small;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: black 0 0 3px;
+            }
+        #AddSignature:hover {
+              background-color: black;
+              color: white;
+            }
+        #UploadNotesButton{
+            margin: 10px auto 20px;
+            width: fit-content;
+            padding: 5px 20px;
+            font-size: larger;
+            border: 2px solid #58bd5a;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: #58bd5a 0 0 10px;
+            }
+        #UploadNotesButton:hover {
+              background-color: #4CAF50;
+              color: white;
+            }
+            
+        #CancelButton{
+            margin: auto;
+            width: fit-content;
+            padding: 3px 10px;
+            font-size: medium;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: red 0 0 10px;
+            }
+        #CancelButton:hover {
+              background-color: red;
+              color: white;
+            }
+        #AddSignatureDiv{
+            display: flex;
+            flex-direction: row;
+        }
+        #AddSignatureLabel{
+            width: fit-content;
+            margin-left: 0;
+            margin-right: 20px;
+        }
+        #AddSignature{
+            width: fit-content;
+            margin-left: 0;
+            margin-right: 20px;
+        }
+            
+        #TextAreaDiv{
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+        }
+    </style><title></title>
+  </head>
+<body>
+<div id="UploadNoteCard">
+    <h1 id="Heading">Upload Notes</h1>
+    <div id="InnerUploadDiv">
+        <form id="TextAreaForm" onsubmit="return checkUpload()">
+            <div id="TextAreaDiv">
+                <label for="EnterNotesTextArea" id="EnterNotesHeading">Enter Notes:</label>
+                <textarea id="EnterNotesTextArea" name="EnterNotesTextArea" rows="5" cols="50"></textarea>
+
+            </div>
+            <div id="AddSignatureDiv">
+                <label for="AddSignature" id="AddSignatureLabel">Add Signature:</label>
+                <label value="Add Signature" id="AddSignature" name="AddSignature" onclick="AddSignature()">
+                    Add Signature
+                </label>
+            </div>
+
+            <input type="submit" value="Upload Notes" id="UploadNotesButton"/>
+        </form>
+        <button id="CancelButton" 
+                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+            Cancel
+        </button>
+        
+        
+    </div>
+</div>
+</body>
+</html>
