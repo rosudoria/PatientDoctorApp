@@ -43,5 +43,10 @@ namespace PatientDoctorApp.Controllers
         {
             return View();
         }
+
+        public IActionResult Schedule()
+        {
+            return View();
+        }
     }
 }

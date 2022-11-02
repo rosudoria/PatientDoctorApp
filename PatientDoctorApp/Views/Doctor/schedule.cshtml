@@ -1,0 +1,82 @@
+﻿@*
+    
+*@
+@{
+    ViewData["Title"] = "Doctors Schedule";
+}
+
+<div class="text-center" style="{}">
+    <h1 class="display-4">Welcome to Doctors Schedule</h1>
+     <ul class="nav nav-tabs col-6 offset-3" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="Today-tab" data-bs-toggle="tab" data-bs-target="#Today" type="button" role="tab" aria-controls="Today" aria-selected="true">Today</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="Tomorrow-tab" data-bs-toggle="tab" data-bs-target="#Tomorrow" type="button" role="tab" aria-controls="Tomorrow" aria-selected="false">Tomorrow</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab" aria-controls="calendar" aria-selected="false">Calendar</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="requests-tab" data-bs-toggle="tab" data-bs-target="#requests" type="button" role="tab" aria-controls="requests" aria-selected="false">requests</button>
+      </li>
+     </ul>
+    <div class="tab-content col-6 offset-3" id="myTabContent">
+      <div class="tab-pane fade show active overflow-auto" id="Today" role="tabpanel" aria-labelledby="Today-tab">
+        <div class="accordion col-6 offset-3" id="accordionExample">
+         <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+             9:00am John Doe
+           </button>
+          </h2>
+         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            Appointment details here
+          </div>
+         </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+             10:00am John Cena
+           </button>
+          </h2>
+         <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            Appointment details here
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="tab-pane fade overflow-auto" id="Tomorrow" role="tabpanel" aria-labelledby="Tomorrow-tab">...</div>
+      <div class="tab-pane fade overflow-auto" id="" role="tabpanel" aria-labelledby="calendar-tab">...</div>
+      <div class="tab-pane fade overflow-auto" id="" role="tabpanel" aria-labelledby="requests-tab">...</div>
+    </div>
+</div>
+
+<style>
+   body {
+       background: lightgrey;
+   }
+   .nav-tabs {
+       background: white;
+       border-radius: 5px 5px 0px 0px;
+       box-shadow: 3px 3px #888888;
+       justify-content: space-evenly;
+   }
+   .tab-content {
+       background: white;
+       border-radius: 0px 0px 5px 5px;
+       box-shadow: 3px 3px #888888;
+   }
+   .accordion {
+       margin-top: 10px;
+       margin-bottom: 10px;
+   }
+   .accordion-item {
+       margin-bottom: 10px;
+   }
+
+</style>
