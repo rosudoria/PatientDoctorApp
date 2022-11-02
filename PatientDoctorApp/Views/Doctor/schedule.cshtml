@@ -7,7 +7,7 @@
 
 <div class="text-center" style="{}">
     <h1 class="display-4">Welcome to Doctors Schedule</h1>
-     <ul class="nav nav-tabs col-6 offset-3" id="myTab" role="tablist">
+    <ul class="nav nav-tabs col-6 offset-3" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="Today-tab" data-bs-toggle="tab" data-bs-target="#Today" type="button" role="tab" aria-controls="Today" aria-selected="true">Today</button>
       </li>
@@ -20,68 +20,84 @@
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="requests-tab" data-bs-toggle="tab" data-bs-target="#requests" type="button" role="tab" aria-controls="requests" aria-selected="false">requests</button>
       </li>
-     </ul>
+    </ul>
     <div class="tab-content col-6 offset-3" id="myTabContent">
-      <div class="tab-pane fade show active overflow-auto" id="Today" role="tabpanel" aria-labelledby="Today-tab">
+        <div class="tab-pane fade show active overflow-auto" id="Today" role="tabpanel" aria-labelledby="Today-tab">
+            <div class="accordion col-6 offset-3" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                         9:00am John Doe
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                         Appointment details here
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                         10:00am John Cena
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                     Appointment details here
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade overflow-auto" id="Tomorrow" role="tabpanel" aria-labelledby="Tomorrow-tab">
         <div class="accordion col-6 offset-3" id="accordionExample">
-         <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-             9:00am John Doe
-           </button>
-          </h2>
-         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            Appointment details here
-          </div>
-         </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                     1:00pm John Doever
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                     Appointment details here
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                     2:00pm Senna Queena
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                     Appointment details here
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-             10:00am John Cena
-           </button>
-          </h2>
-         <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            Appointment details here
-          </div>
-         </div>
+    </div>
+    <div class="tab-pane fade overflow-auto" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
+        <div id="calendar-container" class="col-6 offset-3">
+            <label for="startDate">Select Date</label>
+            <input id="startDate" class="form-control" type="date" />
+            <span id="startDateSelected"></span>
         </div>
-       </div>
-      </div>
-      <div class="tab-pane fade overflow-auto" id="Tomorrow" role="tabpanel" aria-labelledby="Tomorrow-tab">
-          <div class="accordion col-6 offset-3" id="accordionExample">
-         <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-             1:00pm John Doever
-           </button>
-          </h2>
-         <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            Appointment details here
-          </div>
-         </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingFour">
-           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-             2:00pm Senna Queena
-           </button>
-          </h2>
-         <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            Appointment details here
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div class="tab-pane fade overflow-auto" id="" role="tabpanel" aria-labelledby="calendar-tab">...</div>
-      <div class="tab-pane fade overflow-auto" id="" role="tabpanel" aria-labelledby="requests-tab">...</div>
+    </div>
+    <div class="tab-pane fade overflow-auto" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+        <button onclick="alertPending()" class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-warning">Pending</span></button>
+        <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-success">Approved</span></a>
+        <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-danger">Canceled</span></a>
+    </div>
     </div>
 </div>
+
+<script>
+  function aprovePending() {
+    alert("Approve appointment?");
+}
+</script>
 
 <style>
    body {
@@ -103,6 +119,9 @@
        margin-bottom: 10px;
    }
    .accordion-item {
+       margin-bottom: 10px;
+   }
+   #calendar-container {
        margin-bottom: 10px;
    }
 
