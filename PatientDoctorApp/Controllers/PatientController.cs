@@ -8,5 +8,20 @@ namespace PatientDoctorApp.Controllers
         {
             return View();
         }
+
+        public IActionResult RequestAppointment()
+        {
+            return View();
+        }
+
+        public IActionResult ViewAppointments()
+        {
+            return View();
+        }
+
+        public IActionResult PatientProfile()
+        {
+            return View();
+        }
     }
 }

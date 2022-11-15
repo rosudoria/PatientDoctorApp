@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "SelectedPatientUploadDiagnosis";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    @*<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">*@
+    <title>Upload Diagnosis</title>
+    <script>
+        function AddSignature(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+            }
+            else{
+                let signature = prompt("Please enter your signature", "Enter Signature");
+                if (signature === "Password") {
+                    let Signature = document.getElementById("AddSignature");
+                    Signature.innerHTML = "verified";
+                    Signature.style.color = "green";
+                    Signature.style.border = "0";
+                    Signature.style.backgroundColor = "white";
+                    Signature.style.boxShadow = "0 0 0 0";
+                    Signature.style.fontSize = "larger";
+                    
+                }
+                else {
+                    alert("Wrong Password");
+                }
+            }
+        }
+         
+        function checkUpload(){
+            if (document.getElementById("AddSignature").innerHTML === "verified"){
+                return true;
+            }
+            else{
+                alert("Please verify your signature");
+                return false;
+            }
+        }
+    </script>
+    <style>
+        #UploadDiagnosisCard{
+            width: 70vh;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        #Heading{
+            text-align: center;
+        }
+        
+        #UploadDiagnosisForm{
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
+            width: 60vh;
+        }
+        
+        label{
+            font-size: larger;
+            margin: 5px;
+        }
+        
+        .FormItem{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin: 5px;
+            font-size: medium;
+        }
+        #UploadDiagnosisButton{
+            margin: 20px auto;
+            width: fit-content;
+            padding: 5px 20px;
+            font-size: larger;
+            border: 2px solid #58bd5a;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 5px #58bd5a;
+        }
+        #UploadDiagnosisButton:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #CancelButton{
+            margin: auto;
+            width: fit-content;
+            padding: 3px 10px;
+            font-size: medium;
+            border: 2px solid red;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 5px red;
+        }
+        #CancelButton:hover {
+            background-color: red;
+            color: white;
+        }
+        #AddSignature{
+            font-size: medium;
+            border: 2px solid black;
+            border-radius: 20px;
+            background-color: white;
+            padding: 5px 0;
+            text-align: center;
+            box-shadow: 0 0 2px black;
+            }
+        #AddSignature:hover {
+              background-color: black;
+              color: white;
+            }
+        .FormItem{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin: 5px;
+            font-size: medium;
+        }
+        
+        
+    </style>
+  </head>
+<body>
+<div id="UploadDiagnosisCard">
+    <h1 id="Heading">
+        Upload Patient Diagnosis
+    </h1>
+    <div id="InnerUploadCard">
+        <form id="UploadDiagnosisForm" onsubmit="return checkUpload()">
+            <div id="ConditionStatusDiv" class="FormItem">
+                <label for="ConditionStatus">ConditionStatus</label>
+                <textarea name="ConditionStatus" id="ConditionStatus"></textarea>
+            </div>
+            <div id="PrescriptionsDiv" class="FormItem">
+                <label for="Prescriptions">Prescriptions</label>
+                <textarea name="Prescriptions" id="Prescriptions"></textarea>
+            </div>
+            <div id="RemarksDiv" class="FormItem">
+                <label for="Remarks">Remarks</label>
+                <textarea name="Remarks" id="Remarks"></textarea>
+            </div>@*
+            <div id="UploadFiles" class="FormItem">
+                <label for="UploadFile">Upload File</label>
+                <input type="file" id="UploadFile" name="UploadFile" accept=".pdf">
+            </div>*@
+            <div id="AddSignatureDiv" class="FormItem">
+                <label for="AddSignature">Add Signature</label>
+                <label id="AddSignature" name="AddSignature" value="Add Signature" onclick="AddSignature()">
+                    Add Signature
+                </label>
+            </div>
+            <input type="submit" value="Upload Diagnosis" id="UploadDiagnosisButton"/>
+        </form>
+        <button id="CancelButton"
+                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+            Cancel
+        </button>
+    </div>
+</div>
+</body>
+</html>
