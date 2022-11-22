@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Humanizer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using PatientDoctorApp.Areas.Identity.Data;
@@ -117,6 +118,11 @@ namespace PatientDoctorApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string Role { get; set; }
+            public string Gender { get; set; }
+            
+            public DateTime DOB { get; set; }
         }
 
 
@@ -136,6 +142,32 @@ namespace PatientDoctorApp.Areas.Identity.Pages.Account
 
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.DateOfBirth = Input.DOB;
+                if (Input.Gender == "0")
+                {
+                    user.GenderId = 0;
+                    user.Gender = "Male";
+                } else if (Input.Gender == "1")
+                {
+                    user.GenderId = 1;
+                    user.Gender = "Female";
+                }
+                else
+                {
+                    user.GenderId = 2;
+                    user.Gender = "Other";
+                }
+
+                if (Input.Role == "0")
+                {
+                    user.RoleId = 0;
+                    user.Role = "Patient";
+                }
+                else
+                {
+                    user.RoleId = 1;
+                    user.Role = "Doctor";
+                }
                 
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

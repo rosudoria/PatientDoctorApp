@@ -23,7 +23,7 @@
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>            
             <div class="form-floating">
-                <select class="form-select" id="genderSelect" >
+                <select class="form-select" id="genderSelect" asp-for="Input.Gender">
                     <option value="0">Male</option>
                     <option value="1">Female</option>
                     <option value="2">Other</option>
@@ -37,7 +37,7 @@
                 <span asp-validation-for="GenderId" class="text-danger"/>
             </div>*@
             <div class="form-floating">
-                <select class="form-select" id="roleSelect" >
+                <select class="form-select" id="roleSelect" asp-for="Input.Role">
                     <option value="0">Patient</option>
                     <option value="1">Doctor</option>
                 </select>
@@ -45,7 +45,7 @@
             </div>
             <div class="col-sm-5">
                 <label for="startDate">Date Of Birth</label>
-                <input id="startDate" class="form-control" type="date" />
+                <input id="startDate" class="form-control" type="date" asp-for="Input.DOB"/>
                 <span id="startDateSelected"></span>
             </div>
             <div class="form-floating">
