@@ -35,8 +35,15 @@ public class DoctorPatientAppUserEntityConfiguration : IEntityTypeConfiguration<
     }
 }
 
+/// <summary>
+/// This class is used to configure the mapping between the <see cref="PatientDoctorAppDocument"/> and the database.
+/// </summary>
 public class DoctorPatientAppDocumentEntityConfiguration : IEntityTypeConfiguration<Document>
 {
+    /// <summary>
+    /// This method is used to configure the mapping between the <see cref="PatientDoctorAppDocument"/> and the database.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Document> builder)
     {
         builder.Property(d => d.DoctorId).HasMaxLength(255);
@@ -47,7 +54,7 @@ public class DoctorPatientAppDocumentEntityConfiguration : IEntityTypeConfigurat
         builder.Property(d => d.Type).HasMaxLength(255);
         builder.Property(d => d.Note).HasMaxLength(255);
         builder.Property(d => d.ConditionStatus).HasMaxLength(255);
-        builder.Property(d => d.Presciptions).HasMaxLength(255);
+        builder.Property(d => d.Prescriptions).HasMaxLength(255);
         builder.Property(d => d.Remarks).HasMaxLength(255);
         builder.Property(d => d.FilePathTestReport).HasMaxLength(255);
         builder.Property(d => d.TestName).HasMaxLength(255);

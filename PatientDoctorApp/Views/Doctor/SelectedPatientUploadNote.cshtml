@@ -139,7 +139,7 @@
 <div id="UploadNoteCard">
     <h1 id="Heading">Upload Notes</h1>
     <div id="InnerUploadDiv">
-        <form id="TextAreaForm" onsubmit="return checkUpload()">
+        <form id="TextAreaForm" onsubmit="return checkUpload()" asp-controller="Doctor" asp-action="SelectedPatientUploadNote">
             <div id="TextAreaDiv">
                 <label for="EnterNotesTextArea" id="EnterNotesHeading">Enter Notes:</label>
                 <textarea id="EnterNotesTextArea" name="EnterNotesTextArea" rows="5" ></textarea>

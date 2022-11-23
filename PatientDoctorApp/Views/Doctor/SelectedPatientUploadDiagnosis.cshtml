@@ -128,7 +128,7 @@
         Upload Patient Diagnosis
     </h1>
     <div id="InnerUploadCard">
-        <form id="UploadDiagnosisForm" onsubmit="return checkUpload()">
+        <form id="UploadDiagnosisForm" onsubmit="return checkUpload()" asp-controller="Doctor" asp-action="SelectedPatientUploadDiagnosis">
             <div id="ConditionStatusDiv" class="FormItem">
                 <label for="ConditionStatus">ConditionStatus</label>
                 <textarea name="ConditionStatus" id="ConditionStatus"></textarea>
