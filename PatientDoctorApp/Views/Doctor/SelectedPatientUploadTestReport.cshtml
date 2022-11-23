@@ -113,7 +113,9 @@
     <h1 id="Heading">Upload Test Report</h1>
     <form method="post" 
           onsubmit="return checkUpload()"
-          >
+          asp-controller="Doctor"
+          asp-action="SelectedPatientUploadTestReport"
+    >
         <div class="FormItem">
             <label for="TitleOfTheReport">Title of the Report</label>
             <input type="text" name="TitleOfTheReport" id="TitleOfTheReport"/>
