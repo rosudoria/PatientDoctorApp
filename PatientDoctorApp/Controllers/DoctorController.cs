@@ -94,6 +94,7 @@ namespace PatientDoctorApp.Controllers
             return View();
         }*/
         
+        [HttpGet]
         public IActionResult SelectedPatientUploadDocuments()
         {
             var Url = Request.Query["PatientId"];
@@ -139,7 +140,10 @@ namespace PatientDoctorApp.Controllers
             int result = document.SaveDocument();
             if (result>0)
             {
-                return View("SelectedPatientUploadDocuments");
+                return RedirectToAction("SelectedPatientUploadDocuments", "Doctor", new {PatientId = id});
+                /*
+                return View("SelectedPatientUploadDocuments", new{PatientId = id});
+            */
             }
             return View("SelectedPatientUploadDocuments");
         }
@@ -165,7 +169,7 @@ namespace PatientDoctorApp.Controllers
             int result = document.SaveDocument();
             if (result>0)
             {
-                return View("SelectedPatientUploadDocuments");
+                return RedirectToAction("SelectedPatientUploadDocuments", "Doctor", new {PatientId = id});
             } 
             return View("SelectedPatientUploadDocuments");
         }
@@ -209,7 +213,7 @@ namespace PatientDoctorApp.Controllers
             int result = document.SaveDocument();
             if (result>0)
             {
-                return View("SelectedPatientUploadDocuments");
+                return RedirectToAction("SelectedPatientUploadDocuments", "Doctor", new {PatientId = id});
             }
             return View("SelectedPatientUploadDocuments");
 
