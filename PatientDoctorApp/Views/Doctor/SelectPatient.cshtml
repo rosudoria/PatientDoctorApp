@@ -1,10 +1,22 @@
-﻿@{
+﻿@model List<PatientDoctorApp.Areas.Identity.Data.PatientDoctorAppUser>
+@{
     ViewData["Title"] = "Select Patient";
 }
 
 <h2 style="text-align: center"> Select A Patient </h2>
 <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action"
+    @foreach(var patient in Model)
+    {
+        <a asp-controller="Doctor"
+           asp-action="SelectedPatientLandingPage"
+           onclick="window.location.href = '@Url.Action("SelectedPatientLandingPage", "Doctor", new {PatientId = patient.Id})'"
+           asp-route-id="@patient.Id"
+           class="list-group-item list-group-item-action">
+            @patient.FirstName @patient.LastName
+        </a>
+    }
+    
+    @*<a href="#" class="list-group-item list-group-item-action"
        onclick="window.location= '@Url.Action("SelectedPatientLandingPage", "Doctor")'">
         Patient 1
     </a>
@@ -19,5 +31,5 @@
     <a href="#" class="list-group-item list-group-item-action"
        onclick="window.location= '@Url.Action("SelectedPatientLandingPage", "Doctor")'">
         Patient 4
-    </a>
+    </a>*@
 </div>

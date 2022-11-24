@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientDoctorApp.Data;
 
@@ -11,9 +12,10 @@ using PatientDoctorApp.Data;
 namespace PatientDoctorApp.Migrations
 {
     [DbContext(typeof(PatientDoctorAppContext))]
-    partial class PatientDoctorAppContextModelSnapshot : ModelSnapshot
+    [Migration("20221123082113_UpdateTableDocumentTableTestReport")]
+    partial class UpdateTableDocumentTableTestReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,9 +302,10 @@ namespace PatientDoctorApp.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("Type")
+                    b.Property<string>("Type")
+                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("DocumentId");
 

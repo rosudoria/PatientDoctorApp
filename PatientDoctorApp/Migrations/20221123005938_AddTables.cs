@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PatientDoctorApp.Migrations
 {
-    public partial class PatientDoctorApp : Migration
+    public partial class AddTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,11 @@ namespace PatientDoctorApp.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GenderId = table.Column<int>(type: "int", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -48,6 +53,30 @@ namespace PatientDoctorApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Document",
+                columns: table => new
+                {
+                    DocumentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DoctorId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PatientId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AppointmentId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", maxLength: 255, nullable: false),
+                    Type = table.Column<int>(type: "int", maxLength: 255, nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    TestName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    TestDate = table.Column<DateTime>(type: "datetime2", maxLength: 255, nullable: false),
+                    TestResult = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    FilePathTestReport = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ConditionStatus = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Presciptions = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Remarks = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Document", x => x.DocumentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,6 +241,9 @@ namespace PatientDoctorApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Document");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PatientDoctorApp.Controllers.SelectedPatientLandingPageViewModel
+@{
     ViewBag.Title = "Patient Home";
 }
 
@@ -200,8 +201,9 @@
             </div>
             <div id="ProfileInfo">
                 <div id="ProfileInfoInnerDiv">
-                    <p id="ProfileName">Name: John Doe</p>
-                    <p id="ProfileAge">Age: 30yrs</p>
+                    <p id="ProfileName">Name: @Model.PatientName</p>
+                    <p id="ProfileAge">Age:
+                        @Model.PatientsAge yrs</p>
                 </div>
             </div>
         </div>
@@ -217,14 +219,12 @@
             <div id="PatientCondition">
                 <h3 id="ConditionHeading">Patient Condition Status</h3>
                 <p id="ConditionParagraph">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type
-                    specimen book.
+                    @Model.Diagnosis
                 </p>
             </div>
             <div id="Prescription">
                 <h3 id="PrescriptionHeading">Prescription</h3>
+                <p>@Model.Prescriptions</p>
                 <ol id="PrescriptionList">
                     <li>Medicine 1</li>
                     <li>Medicine 2</li>
@@ -234,8 +234,9 @@
             <div id="Remarks">
                 <h3>Remarks</h3>
                 <p id="RemarksParagraph">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    @Model.Remarks
+                </p>
+                
             </div>
         </div>
         
@@ -252,7 +253,13 @@
                     View Patient History
                 </button>
                 <button id="UploadDocuments" class="PatientProfileButtons"
-                        onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+                        asp-controller="Doctor"
+                        asp-action="SelectedPatientUploadDocuments"
+                        onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor", new {PatientId= @Model.PatientId })'"
+                        asp-route-id="@Model.PatientId"
+                        >
+                        
+                
                     Upload Documents
                 </button>
             </div>
