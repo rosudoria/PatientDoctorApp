@@ -115,6 +115,7 @@
           onsubmit="return checkUpload()"
           asp-controller="Doctor"
           asp-action="SelectedPatientUploadTestReport"
+          asp-route-id="@ViewBag.PatientID"
     >
         <div class="FormItem">
             <label for="TitleOfTheReport">Title of the Report</label>
@@ -143,7 +144,7 @@
         </div>
     </form>
     <button id="CancelButton"
-            onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+            onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor", new {PatientId = @ViewBag.PatientId})'">
          Cancel
     </button>
 </div>

@@ -13,6 +13,11 @@ public class PatientDoctorAppContext : IdentityDbContext<PatientDoctorAppUser>
         : base(options)
     {
     }
+    
+    public DbSet<Document> Document { get; set; }
+    /*
+    public DbSet<PatientDoctorAppUser> Patients { get; set; }
+    */
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

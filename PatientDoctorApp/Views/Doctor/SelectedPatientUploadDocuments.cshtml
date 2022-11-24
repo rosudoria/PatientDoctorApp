@@ -175,7 +175,7 @@
             document.getElementById("UploadButton").innerHTML = "Upload Test Report";
             document.getElementById("DocumentType").innerHTML = "Test Report";
             document.getElementById("UploadButton").addEventListener("click", function(){
-                window.location.href = '@Url.Action("SelectedPatientUploadTestReport", "Doctor")';
+                window.location.href = '@Url.Action("SelectedPatientUploadTestReport", "Doctor", new { PatientId = @ViewBag.PatientId })';
             });
 
         }
@@ -183,14 +183,14 @@
             document.getElementById("UploadButton").innerHTML = "Upload Note";
             document.getElementById("DocumentType").innerHTML = "Note";
             document.getElementById("UploadButton").addEventListener("click", function(){
-                            window.location.href = '@Url.Action("SelectedPatientUploadNote", "Doctor")';
+                            window.location.href = '@Url.Action("SelectedPatientUploadNote", "Doctor" , new { PatientId = @ViewBag.PatientId })';
             });
         }
         else if(radio_button.value === "Diagnosis"){
             document.getElementById("UploadButton").innerHTML = "Upload Diagnosis";
             document.getElementById("DocumentType").innerHTML = "Diagnosis";
             document.getElementById("UploadButton").addEventListener("click", function(){
-                window.location.href = '@Url.Action("SelectedPatientUploadDiagnosis", "Doctor")';
+                window.location.href = '@Url.Action("SelectedPatientUploadDiagnosis", "Doctor", new { PatientId = @ViewBag.PatientId })';
             });
         }
     }
@@ -256,7 +256,7 @@
                 It has survived not only five centuries, but also the leap into electronic typesetting.
             </p>
             <button id="UploadButton" 
-                    onclick="window.location= '@Url.Action("SelectedPatientUploadTestReport", "Doctor")'">
+                    onclick="window.location= '@Url.Action("SelectedPatientUploadTestReport", "Doctor", new {PatientId = @ViewBag.PatientId})'">
                 Upload Test Report
             </button>
         </div>
