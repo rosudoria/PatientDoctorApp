@@ -249,7 +249,11 @@
                 </p>
             </div>
             <div id="ButtonGroup">
-                <button id="ViewPatientHistory" class="PatientProfileButtons">
+                <button id="ViewPatientHistory" class="PatientProfileButtons"
+                        asp-controller="Doctor"
+                        asp-action="SelectedPatientViewDocuments"
+                        asp-route-id="@Model.PatientId"
+                        onclick="window.location.href = '@Url.Action("SelectedPatientViewDocuments", "Doctor", new { PatientId = @Model.PatientId })'">
                     View Patient History
                 </button>
                 <button id="UploadDocuments" class="PatientProfileButtons"

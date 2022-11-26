@@ -6,6 +6,7 @@ using PatientDoctorApp.Models;
 
 namespace PatientDoctorApp.Controllers
 {
+    // This controller is used to display various stats related to the patient on doctor's dashboard
     public class DoctorController : Controller
     {
         
@@ -25,6 +26,12 @@ namespace PatientDoctorApp.Controllers
             return View();
         }
         
+        /// <summary>
+        /// This method is used to display the list of patients in the doctor's dashboard.
+        /// </summary>
+        /// <returns>
+        /// The view of the list of patients.
+        /// </returns>
         public IActionResult SelectPatient()
         {
             var PatientDoctorAppUsers = _context.Users.OrderBy(m => m.RoleId).ToList();
@@ -43,6 +50,13 @@ namespace PatientDoctorApp.Controllers
             return View(ListOfPatients);
         }
         
+        /// <summary>
+        /// This is a get method to display the patient's details on selecting a patient from the list.
+        /// </summary>
+        /// <param name="id">a string: The patientID</param>
+        /// <returns>
+        /// The view of the patient's details.
+        /// </returns>
         [HttpGet]
         public IActionResult SelectedPatientLandingPage(string id)
         {
@@ -94,6 +108,12 @@ namespace PatientDoctorApp.Controllers
             return View();
         }*/
         
+        /// <summary>
+        /// This is the get method to display the type of documents to be uploaded.
+        /// </summary>
+        /// <returns>
+        /// The view of the Document Select component.
+        /// </returns>
         [HttpGet]
         public IActionResult SelectedPatientUploadDocuments()
         {
@@ -157,7 +177,7 @@ namespace PatientDoctorApp.Controllers
         public IActionResult SelectedPatientUploadNote(string id, string EnterNotesTextArea)
         {
             Document document = new Document();
-            document.DocumentId = "2";
+            document.DocumentId = "4";
             document.PatientId = id;
             document.AppointmentId = "1";
             document.DoctorId = "1";
@@ -199,7 +219,7 @@ namespace PatientDoctorApp.Controllers
             /*var Url = Request.Query["PatientId"];
             var PatientId = HttpContext.Request.Query["PatientId"];*/
             Document document = new Document();
-            document.DocumentId = "8";
+            document.DocumentId = "9";
             document.PatientId = id;
             document.AppointmentId = "1";
             document.DoctorId = "1";
@@ -236,18 +256,91 @@ namespace PatientDoctorApp.Controllers
         {
             return View();
         }
+        
+        /// <summary>
+        /// This method is used to display all the documents of the selected patient from the DB.
+        /// </summary>
+        /// <returns>
+        /// The view of all the documents of the selected patient.
+        /// </returns>
+        public IActionResult SelectedPatientViewDocuments()
+        {
+            var Url = Request.Query["PatientId"];
+            var PatientId = Url.ToString();
+            ViewBag.PatientId = PatientId;
+            var DocumentList = _context.Document.OrderBy(d => d.PatientId).ToList();
+            var PatientDocumentListNotes = new List<Document>();
+            var PatientDocumentListTestReport = new List<Document>();
+            var PatientDocumentListDiagnosis = new List<Document>();
+            foreach (var PatientDocument in DocumentList)
+            {
+                if (PatientDocument.PatientId == ViewBag.PatientId)
+                {
+                    if (PatientDocument.Type == 3)
+                    {
+                        PatientDocumentListDiagnosis.Add(PatientDocument);
+                    }
+                    else if (PatientDocument.Type == 1)
+                    {
+                        PatientDocumentListTestReport.Add(PatientDocument);
+                    }
+                    else if (PatientDocument.Type == 2)
+                    {
+                        PatientDocumentListNotes.Add(PatientDocument);
+                    }
+                }
+
+            }
+            var SelectedPatientViewDocumentModel = new SelectedPatientViewDocumentsModel(PatientDocumentListDiagnosis, PatientDocumentListTestReport, PatientDocumentListNotes);
+            return View(SelectedPatientViewDocumentModel);
+        }
+        
     }
     
+    /// <summary>
+    /// This is the View model class for the SelectedPatientLandingPageViewModel method.
+    /// </summary>
     public class SelectedPatientLandingPageViewModel
     {
+        /// <summary>
+        /// Name of the patient.
+        /// </summary>
         public string PatientName { get; set; }
+        
+        /// <summary>
+        /// Age of the patient.
+        /// </summary>
         public string PatientsAge { get; set; }
+        
+        /// <summary>
+        /// Diagnosis of the patient.
+        /// </summary>
         public string Diagnosis { get; set; }
+        
+        /// <summary>
+        /// Prescriptions of the patient.
+        /// </summary>
         public string Prescriptions { get; set; }
+        
+        /// <summary>
+        /// These should be any remarks made by the doctor for the patient.
+        /// </summary>
         public string Remarks { get; set; }
         
+        /// <summary>
+        /// Patient's ID.
+        /// </summary>
         public string PatientId { get; set; }
         
+        /// <summary>
+        /// This is the constructor for the SelectedPatientLandingPageViewModel class.
+        /// </summary>
+        /// <param name="patientName"></param>
+        /// <param name="patientsAge"></param>
+        /// <param name="diagnosis"></param>
+        /// <param name="prescriptions"></param>
+        /// <param name="remarks"></param>
+        /// <param name="patientId"></param>
         public SelectedPatientLandingPageViewModel(string patientName, string patientsAge, 
             string diagnosis, string prescriptions, string remarks, string patientId)
         {
@@ -259,6 +352,40 @@ namespace PatientDoctorApp.Controllers
             PatientId = patientId;
         }
         
+    }
+
+    /// <summary>
+    /// This is the View model class for the SelectedPatientViewDocuments method.
+    /// </summary>
+    public class SelectedPatientViewDocumentsModel
+    {
+        /// <summary>
+        /// List of all the diagnosis of the patient.
+        /// </summary>
+        public List<Document> PatientsDiagnosis { get; set; }
+        
+        /// <summary>
+        /// List of all the test reports of the patient.
+        /// </summary>
+        public List<Document> PatientsTestReports { get; set; }
+        
+        /// <summary>
+        /// List of all the notes of the patient made by the doctor.
+        /// </summary>
+        public List<Document> PatientsNotes { get; set; }
+        
+        /// <summary>
+        /// This is the constructor for the SelectedPatientViewDocumentsModel class.
+        /// </summary>
+        /// <param name="patientsDiagnosis"></param>
+        /// <param name="patientsTestReports"></param>
+        /// <param name="patientsNotes"></param>
+        public SelectedPatientViewDocumentsModel(List<Document> patientsDiagnosis, List<Document> patientsTestReports, List<Document> patientsNotes)
+        {
+            PatientsDiagnosis = patientsDiagnosis;
+            PatientsTestReports = patientsTestReports;
+            PatientsNotes = patientsNotes;
+        }
     }
     
 }
