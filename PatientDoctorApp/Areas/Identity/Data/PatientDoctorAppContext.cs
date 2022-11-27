@@ -13,7 +13,9 @@ public class PatientDoctorAppContext : IdentityDbContext<PatientDoctorAppUser>
         : base(options)
     {
     }
-    
+
+    public DbSet<Appointment> Appointment {  get; set; }
+
     public DbSet<Document> Document { get; set; }
     /*
     public DbSet<PatientDoctorAppUser> Patients { get; set; }
@@ -28,6 +30,7 @@ public class PatientDoctorAppContext : IdentityDbContext<PatientDoctorAppUser>
 
         builder.ApplyConfiguration(new DoctorPatientAppUserEntityConfiguration());
         builder.ApplyConfiguration(new DoctorPatientAppDocumentEntityConfiguration());
+        builder.ApplyConfiguration(new DoctorPatientAppAppointmentEntityConfiguration());
     }
 }
 
@@ -37,6 +40,24 @@ public class DoctorPatientAppUserEntityConfiguration : IEntityTypeConfiguration<
     {
         builder.Property(u => u.FirstName).HasMaxLength(255);
         builder.Property(u => u.LastName).HasMaxLength(255);
+    }
+}
+
+public class DoctorPatientAppAppointmentEntityConfiguration: IEntityTypeConfiguration<Appointment>
+{
+
+    public void Configure(EntityTypeBuilder<Appointment> builder)
+    {
+        builder.Property(a => a.Id).HasMaxLength(255);
+        builder.Property(a => a.PatientId).HasMaxLength(255);
+        builder.Property(a => a.DoctorId).HasMaxLength(255);
+        builder.Property(a => a.Email).HasMaxLength(255);
+        builder.Property(a => a.Phone).HasMaxLength(255);
+        builder.Property(a => a.Reason).HasMaxLength(255);
+        builder.Property(a => a.Details).HasMaxLength(255);
+        builder.Property(a => a.Date).HasMaxLength(255);
+        builder.Property(a => a.AppointmentType).HasMaxLength(255);
+        builder.Property(a => a.Status).HasMaxLength(255);   
     }
 }
 
