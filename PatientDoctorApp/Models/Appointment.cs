@@ -10,7 +10,7 @@ namespace PatientDoctorApp.Models
         public string Reason { get; set; }
 
         [Required(ErrorMessage = "Unique ID")]
-        public string _Id { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Patient ID required")]
         public string PatientId { get; set; }
