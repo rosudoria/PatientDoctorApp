@@ -28,9 +28,9 @@ namespace PatientDoctorApp.Models
 
         public string Phone { get; set; }
 
-        public string Date { get; set; }
+        public DateOnly Date { get; set; }
 
-        public string Time { get; set; }
+        public TimeOnly Time { get; set; }
     }
 
     enum StatusTypes
