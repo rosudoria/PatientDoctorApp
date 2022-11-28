@@ -149,11 +149,11 @@ namespace PatientDoctorApp.Controllers
             Document document = new Document();
             if (ListOfAllDocuments.Count == 0)
             {
-                document.DocumentId = "1";
+                document.DocumentId = 1;
             }
             else
             {
-                document.DocumentId = (Int64.Parse(ListOfAllDocuments.LastOrDefault()!.DocumentId) + 1).ToString();
+                document.DocumentId = ListOfAllDocuments.LastOrDefault()!.DocumentId + 1;
             }
             document.PatientId = id;
             document.AppointmentId = "1";
@@ -186,14 +186,14 @@ namespace PatientDoctorApp.Controllers
         {
             Document document = new Document();
             var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
-            if (ListOfAllDocuments.Count == 0)
+            /*if (ListOfAllDocuments.Count == 0)
             {
-                document.DocumentId = "1";
+                document.DocumentId = 1;
             }
             else
             {
-                document.DocumentId = (Int64.Parse(ListOfAllDocuments.LastOrDefault()!.DocumentId) + 1).ToString();
-            }
+                document.DocumentId = ListOfAllDocuments.LastOrDefault()!.DocumentId + 1;
+            }*/
             document.PatientId = id;
             document.AppointmentId = "1";
             document.DoctorId = "1";
@@ -238,11 +238,11 @@ namespace PatientDoctorApp.Controllers
             var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
             if (ListOfAllDocuments.Count == 0)
             {
-                document.DocumentId = "1";
+                document.DocumentId = 1;
             }
             else
             {
-                document.DocumentId = (Int64.Parse(ListOfAllDocuments.LastOrDefault()!.DocumentId) + 1).ToString();
+                document.DocumentId = ListOfAllDocuments.LastOrDefault()!.DocumentId + 1;
             }
             document.PatientId = id;
             document.AppointmentId = "1";

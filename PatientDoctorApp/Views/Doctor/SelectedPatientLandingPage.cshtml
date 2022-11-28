@@ -194,26 +194,26 @@
         <h1>Patient Profile</h1>
     *@
     </div>
-    <div class="parent">
-        <div class="div1">
-            <div id="ProfilePic">
-                <img id="ProfilePicImage" src="https://via.placeholder.com/130" alt="Avatar"> 
-            </div>
-            <div id="ProfileInfo">
-                <div id="ProfileInfoInnerDiv">
-                    <p id="ProfileName">Name: @Model.PatientName</p>
-                    <p id="ProfileAge">Age:
-                        @Model.PatientsAge yrs</p>
-                </div>
+<div class="parent">
+    <div class="div1">
+        <div id="ProfilePic">
+            <img id="ProfilePicImage" src="https://via.placeholder.com/130" alt="Avatar"> 
+        </div>
+        <div id="ProfileInfo">
+            <div id="ProfileInfoInnerDiv">
+                <p id="ProfileName">Name: @Model.PatientName</p>
+                <p id="ProfileAge">Age:
+                    @Model.PatientsAge yrs</p>
             </div>
         </div>
-        <div class="div2">
-            <div id="NextMeetingWithPatientCard">
-                <h4 id="NextMeetingHeading">Next Meeting</h4>
-                <p id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</p>
-                <p id="MeetingConfirmation">confirmed</p>
-            </div>
+    </div>
+    <div class="div2">
+        <div id="NextMeetingWithPatientCard">
+            <h4 id="NextMeetingHeading">Next Meeting</h4>
+            <p id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</p>
+            <p id="MeetingConfirmation">confirmed</p>
         </div>
+    </div>
     <div class="div3">
         <div id="PatientStatusCard">
             <div id="PatientCondition">
@@ -241,33 +241,47 @@
         </div>
         
     </div>
-        <div class="div4">
-            <div id="PatientRequests">
-                <h3 id="PatientRequestHeading">Requests</h3>
-                <p id="PatientRequestParagraph">
-                    No requests from the Patient yet.
-                </p>
-            </div>
-            <div id="ButtonGroup">
-                <button id="ViewPatientHistory" class="PatientProfileButtons"
-                        asp-controller="Doctor"
-                        asp-action="SelectedPatientViewDocuments"
-                        asp-route-id="@Model.PatientId"
-                        onclick="window.location.href = '@Url.Action("SelectedPatientViewDocuments", "Doctor", new { PatientId = @Model.PatientId })'">
-                    View Patient History
-                </button>
-                <button id="UploadDocuments" class="PatientProfileButtons"
-                        asp-controller="Doctor"
-                        asp-action="SelectedPatientUploadDocuments"
-                        onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor", new {PatientId= @Model.PatientId })'"
-                        asp-route-id="@Model.PatientId"
-                        >
-                        
-                
-                    Upload Documents
-                </button>
-            </div>
+    <div class="div4">
+        <div id="PatientRequests">
+            <h3 id="PatientRequestHeading">Requests</h3>
+            <p id="PatientRequestParagraph">
+                No requests from the Patient yet.
+            </p>
         </div>
+        <div id="ButtonGroup">
+            <button id="ViewPatientHistory" class="PatientProfileButtons"
+                    asp-controller="Doctor"
+                    asp-action="SelectedPatientViewDocuments"
+                    asp-route-id="@Model.PatientId"
+                    onclick="window.location.href = '@Url.Action("SelectedPatientViewDocuments", "Doctor", new { PatientId = @Model.PatientId })'">
+                View Patient History
+            </button>
+            <button id="UploadDocuments" class="PatientProfileButtons"
+                    asp-controller="Doctor"
+                    asp-action="SelectedPatientUploadDocuments"
+                    onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor", new {PatientId= @Model.PatientId })'"
+                    asp-route-id="@Model.PatientId"
+            >
+                Upload Documents
+            </button>
         </div>
+    </div>
+</div>
+<a asp-controller="Doctor" asp-action="SelectPatient">
+    <button style="{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        margin: 20px;
+        width: 100px;
+        height: 50px;
+        border: 2px solid #6c757d;
+        border-radius: 20px;
+        font-size: larger;
+        box-shadow: 3px 3px #888888;
+    }">
+        Back to Patients List
+    </button>
+</a>
 </body>
 </html>

@@ -249,8 +249,11 @@ namespace PatientDoctorApp.Migrations
 
             modelBuilder.Entity("PatientDoctorApp.Models.Document", b =>
                 {
-                    b.Property<string>("DocumentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("DocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentId"), 1L, 1);
 
                     b.Property<string>("AppointmentId")
                         .HasMaxLength(255)
@@ -306,7 +309,7 @@ namespace PatientDoctorApp.Migrations
 
                     b.HasKey("DocumentId");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

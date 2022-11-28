@@ -263,5 +263,16 @@
     </div>
 </div>
 
+<a asp-controller="Doctor" asp-action="SelectedPatientLandingPage" style="{
+    text-decoration: solid;
+}"
+   onclick="window.location.href = '@Url.Action("SelectedPatientLandingPage", "Doctor", new {PatientId = @ViewBag.PatientId})'" asp-route-id="@ViewBag.PatientId">
+    <button id="BackButton" class="PatientProfileButtons" style="{
+        position: fixed;
+    }">
+        Back to Patient Profile
+    </button>
+</a>
+
 </body>
 </html>
