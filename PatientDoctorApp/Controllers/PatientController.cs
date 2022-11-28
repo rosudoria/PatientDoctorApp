@@ -72,8 +72,16 @@ namespace PatientDoctorApp.Controllers
             return View("PatientIndex");
         }
 
+        [HttpGet]
         public IActionResult ViewAppointments()
         {
+            //Patient email
+            string email = User.Identity.Name;
+            ViewBag.PatientId = _dbContext.Users.Where(u => u.Email.Contains(email)).ToList()[0].Id;
+
+            //Filter appointments
+            ViewBag.Appointments = _dbContext.Appointment.Where(a => a.Email.Contains(email)).OrderBy( a => a.Id).ToList();
+            ViewBag.Doctors = _dbContext.Users.Where(u => u.Role.Contains("Doctor")).ToList();
             return View();
         }
 
