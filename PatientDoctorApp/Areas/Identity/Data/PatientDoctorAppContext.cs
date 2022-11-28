@@ -58,6 +58,8 @@ public class DoctorPatientAppAppointmentEntityConfiguration: IEntityTypeConfigur
         builder.Property(a => a.Date).HasMaxLength(255);
         builder.Property(a => a.AppointmentType).HasMaxLength(255);
         builder.Property(a => a.Status).HasMaxLength(255);   
+        builder.Property(a => a.TimeSlot).HasMaxLength(255);
+        builder.Property(a => a.MSPNumber).HasMaxLength(255);
     }
 }
 
