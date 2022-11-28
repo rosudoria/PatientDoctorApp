@@ -23,69 +23,57 @@
         <div class="tab-pane fade show active overflow-auto" id="Today" role="tabpanel" aria-labelledby="Today-tab">
                 @for(int i = 0; i < ViewBag.listOfConfirmedAppointments.Count; i++)
                 {
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfConfirmedAppointments[i].Id" aria-expanded="true"
-                                    @*
-                                    aria-controls="collapse-@document.DocumentId"
-                                    *@
-                                    >
+                    if (ViewBag.listOfConfirmedAppointments[i].Date.Date == DateTime.Today.Date)
+                    {
+                        <div class="accordion-item" style="{
+                            width: 60%;
+                        }" >
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfConfirmedAppointments[i].Id" aria-expanded="true"
+                                        aria-controls="collapse-@ViewBag.listOfConfirmedAppointments[i].Id"
+                                >
                                 
-                                @ViewBag.listOfConfirmedAppointmentsNames[i]
-                            </button>
-                        </h2>
-                        @*<div id="collapse-@document.DocumentId" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
-                            <div class="accordion-body">
-                                <p>
-                                    <b>Test Name: </b> @document.TestName <br />
-                                    <b>Test Result: </b> @document.TestResult <br />
-                                    <b>Test Date: </b> @document.TestDate <br />
-                                </p>
+                                    @ViewBag.listOfConfirmedAppointmentsNames[i]
+                                </button>
+                            </h2>
+                            <div id="collapse-@ViewBag.listOfConfirmedAppointments[i].Id" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
+                                <div class="accordion-body">
+                                    <p>
+                                        <b>Type: </b> @ViewBag.listOfConfirmedAppointments[i].AppointmentType <br />
+                                        <b>Reason: </b> @ViewBag.listOfConfirmedAppointments[i].Reason <br />
+                                        <b>Details(Optional): </b> @ViewBag.listOfConfirmedAppointments[i].Details <br />
+                                    </p>
+                                </div>
                             </div>
-                        </div>*@
-                    </div>
-                }
-            <div class="accordion col-6 offset-3" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            9:00am John Doe
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            Appointment details here
                         </div>
-                    </div>
-                </div>
-            </div>
+                    }
+                }
         </div>
     <div class="tab-pane fade overflow-auto" id="Tomorrow" role="tabpanel" aria-labelledby="Tomorrow-tab">
         <div class="accordion col-6 offset-3" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                     1:00pm John Doever
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFour">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                     2:00pm Senna Queena
-                    </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
+            @for(int i = 0; i < ViewBag.listOfConfirmedAppointments.Count; i++){
+               if (ViewBag.listOfConfirmedAppointments[i].Date.Date == DateTime.Today.AddDays(1).Date){
+                  <div class="accordion-item" style="{
+                     width: 60%;
+                  }" >
+                      <h2 class="accordion-header" id="headingOne">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfConfirmedAppointments[i].Id" aria-expanded="true"
+                                  aria-controls="collapse-@ViewBag.listOfConfirmedAppointments[i].Id">
+                              @ViewBag.listOfConfirmedAppointmentsNames[i]
+                          </button>
+                      </h2>
+                      <div id="collapse-@ViewBag.listOfConfirmedAppointments[i].Id" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
+                          <div class="accordion-body">
+                              <p>
+                                  <b>Type: </b> @ViewBag.listOfConfirmedAppointments[i].AppointmentType <br/>
+                                  <b>Reason: </b> @ViewBag.listOfConfirmedAppointments[i].Reason <br/>
+                                  <b>Details(Optional): </b> @ViewBag.listOfConfirmedAppointments[i].Details <br/>
+                              </p>
+                          </div>
+                      </div>
+                      </div>
+               }
+            }
         </div>
     </div>
     <div class="tab-pane fade overflow-auto" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
