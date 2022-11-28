@@ -120,7 +120,70 @@ namespace PatientDoctorApp.Controllers
             var Url = Request.Query["PatientId"];
             var PatientId = Url.ToString();
             ViewBag.PatientId = PatientId;
-            return View();
+            PatientDoctorAppUser PatientDoctorAppUser = _context.Users.Find(PatientId);
+            string PatientName = PatientDoctorAppUser.FirstName + " " + PatientDoctorAppUser.LastName;
+            string PatientAge = (DateTime.Now.Year - PatientDoctorAppUser.DateOfBirth.Value.Year).ToString();
+            
+            var ListOfDocuments = _context.Document.OrderBy(m => m.PatientId).ToList();
+            var PatientsTestReports = new List<Document>();
+            Document PatientsLatestTestReport;
+            
+            var PatientsNotes = new List<Document>();
+            Document PatientsLatestNote;
+            
+            var PatientsDiagnosis = new List<Document>();
+            Document PatientsLatestDiagnosis;
+
+            foreach (var doc in ListOfDocuments)
+            {
+                if (doc.Type == 1 && doc.PatientId == PatientId)
+                {
+                    PatientsTestReports.Add(doc);
+                }
+                else if (doc.Type == 2 && doc.PatientId == PatientId)
+                {
+                    PatientsNotes.Add(doc);
+                }
+                else if (doc.Type == 3 && doc.PatientId == PatientId)
+                {
+                    PatientsDiagnosis.Add(doc);
+                }
+            }
+            
+            int lastTestReportIndex = PatientsTestReports.Count - 1;
+            int lastNoteIndex = PatientsNotes.Count - 1;
+            int lastDiagnosisIndex = PatientsDiagnosis.Count - 1;
+            
+            if (lastTestReportIndex >= 0)
+            {
+                PatientsLatestTestReport = PatientsTestReports[lastTestReportIndex];
+            }
+            else
+            {
+                PatientsLatestTestReport = null;
+            }
+            
+            if (lastNoteIndex >= 0)
+            {
+                PatientsLatestNote = PatientsNotes[lastNoteIndex];
+            }
+            else
+            {
+                PatientsLatestNote = null;
+            }
+            
+            if (lastDiagnosisIndex >= 0)
+            {
+                PatientsLatestDiagnosis = PatientsDiagnosis[lastDiagnosisIndex];
+            }
+            else
+            {
+                PatientsLatestDiagnosis = null;
+            }
+            
+            var viewModel = new SelectedPatientUploadDocumentsViewModel(PatientName, PatientAge, PatientsLatestTestReport, PatientsLatestNote, PatientsLatestDiagnosis);
+
+            return View(viewModel);
         }
         
         /// <summary>
@@ -409,6 +472,24 @@ namespace PatientDoctorApp.Controllers
             PatientsDiagnosis = patientsDiagnosis;
             PatientsTestReports = patientsTestReports;
             PatientsNotes = patientsNotes;
+        }
+    }
+
+    public class SelectedPatientUploadDocumentsViewModel
+    {
+        public string Name { get; set; }
+        public string Age { get; set; }
+        public Document TestReport { get; set; }
+        public Document Diagnosis { get; set; }
+        public Document Notes { get; set; }
+        
+        public SelectedPatientUploadDocumentsViewModel(string name, string age, Document testReport, Document diagnosis, Document notes)
+        {
+            Name = name;
+            Age = age;
+            TestReport = testReport;
+            Diagnosis = diagnosis;
+            Notes = notes;
         }
     }
     
