@@ -26,7 +26,9 @@ namespace PatientDoctorApp.Controllers
         {
             //appointments
             ViewBag.AppointmentIds = _dbContext.Appointment.OrderBy(i => i.Id).ToList();
+            /*
             ViewBag.AppointmentCount = _dbContext.Appointment.OrderBy(i => i.Id).ToList().Count + 1;
+            */
 
             //Patient email
             string email = User.Identity.Name;

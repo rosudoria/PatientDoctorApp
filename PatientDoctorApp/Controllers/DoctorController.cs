@@ -63,6 +63,7 @@ namespace PatientDoctorApp.Controllers
             var DocumentList = _context.Document.OrderBy(m => m.PatientId).ToList();
             var ListOfDocuments = new List<Document>();
             
+            var DoctorEmail = User.Identity.Name;
             foreach (var document in DocumentList)
             {
                 if (
@@ -77,6 +78,26 @@ namespace PatientDoctorApp.Controllers
             var PatientDoctorAppUser = _context.Users.Find(id);
             var PatientsDOB = PatientDoctorAppUser.DateOfBirth;
             
+            //Get List of all the Appointments for the patient
+            var AppointmentList = _context.Appointment.OrderBy(m => m.PatientId).ToList();
+            var ListOfAppointments = new List<Appointment>();
+            foreach (var appointments in AppointmentList)
+            {
+                if (appointments.PatientId == id)
+                {
+                    ListOfAppointments.Add(appointments);
+                }
+            }
+            Appointment LatestAppointment = ListOfAppointments.LastOrDefault();
+            var DoctorId = "";
+            var DoctorsName = "";
+            if (LatestAppointment != null)
+            {
+                DoctorId = LatestAppointment.DoctorId;
+                DoctorsName = "Dr. " + _context.Users.Find(DoctorId).FirstName + " " + _context.Users.Find(DoctorId).LastName;
+            }
+            
+
             // Data for the view
             string PatientsAge = (DateTime.Now.Year - PatientsDOB.Value.Year).ToString();
             string PatientName = PatientDoctorAppUser.FirstName + " " + PatientDoctorAppUser.LastName;
@@ -100,7 +121,7 @@ namespace PatientDoctorApp.Controllers
             
             
             // Create a new view model
-            var viewModel = new SelectedPatientLandingPageViewModel(PatientName, PatientsAge, Diagnosis, Prescription, Remarks, PatientId);
+            var viewModel = new SelectedPatientLandingPageViewModel(PatientName, PatientsAge, Diagnosis, Prescription, Remarks, PatientId, LatestAppointment, DoctorsName);
             
             return View(viewModel);
         }
@@ -120,7 +141,70 @@ namespace PatientDoctorApp.Controllers
             var Url = Request.Query["PatientId"];
             var PatientId = Url.ToString();
             ViewBag.PatientId = PatientId;
-            return View();
+            PatientDoctorAppUser PatientDoctorAppUser = _context.Users.Find(PatientId);
+            string PatientName = PatientDoctorAppUser.FirstName + " " + PatientDoctorAppUser.LastName;
+            string PatientAge = (DateTime.Now.Year - PatientDoctorAppUser.DateOfBirth.Value.Year).ToString();
+            
+            var ListOfDocuments = _context.Document.OrderBy(m => m.PatientId).ToList();
+            var PatientsTestReports = new List<Document>();
+            Document PatientsLatestTestReport;
+            
+            var PatientsNotes = new List<Document>();
+            Document PatientsLatestNote;
+            
+            var PatientsDiagnosis = new List<Document>();
+            Document PatientsLatestDiagnosis;
+
+            foreach (var doc in ListOfDocuments)
+            {
+                if (doc.Type == 1 && doc.PatientId == PatientId)
+                {
+                    PatientsTestReports.Add(doc);
+                }
+                else if (doc.Type == 2 && doc.PatientId == PatientId)
+                {
+                    PatientsNotes.Add(doc);
+                }
+                else if (doc.Type == 3 && doc.PatientId == PatientId)
+                {
+                    PatientsDiagnosis.Add(doc);
+                }
+            }
+            
+            int lastTestReportIndex = PatientsTestReports.Count - 1;
+            int lastNoteIndex = PatientsNotes.Count - 1;
+            int lastDiagnosisIndex = PatientsDiagnosis.Count - 1;
+            
+            if (lastTestReportIndex >= 0)
+            {
+                PatientsLatestTestReport = PatientsTestReports[lastTestReportIndex];
+            }
+            else
+            {
+                PatientsLatestTestReport = null;
+            }
+            
+            if (lastNoteIndex >= 0)
+            {
+                PatientsLatestNote = PatientsNotes[lastNoteIndex];
+            }
+            else
+            {
+                PatientsLatestNote = null;
+            }
+            
+            if (lastDiagnosisIndex >= 0)
+            {
+                PatientsLatestDiagnosis = PatientsDiagnosis[lastDiagnosisIndex];
+            }
+            else
+            {
+                PatientsLatestDiagnosis = null;
+            }
+            
+            var viewModel = new SelectedPatientUploadDocumentsViewModel(PatientName, PatientAge, PatientsLatestTestReport, PatientsLatestNote, PatientsLatestDiagnosis);
+
+            return View(viewModel);
         }
         
         /// <summary>
@@ -145,11 +229,23 @@ namespace PatientDoctorApp.Controllers
         [HttpPost]
         public IActionResult SelectedPatientUploadTestReport(string id, string TitleOfTheReport, string Result, string Date)
         {
+            var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
+            
+            var DoctorEmail = User.Identity.Name;
+            var loggedInDoctorsId = _context.Users.Where(m => m.Email == DoctorEmail).FirstOrDefault().Id;
+
             Document document = new Document();
-            document.DocumentId = "1";
+            if (ListOfAllDocuments.Count == 0)
+            {
+                document.DocumentId = 1;
+            }
+            else
+            {
+                document.DocumentId = ListOfAllDocuments.LastOrDefault()!.DocumentId + 1;
+            }
             document.PatientId = id;
             document.AppointmentId = "1";
-            document.DoctorId = "1";
+            document.DoctorId = loggedInDoctorsId;
             document.Date = DateTime.Now;
             document.Type = (int) type.TestReport;
             document.TestName = TitleOfTheReport;
@@ -177,10 +273,12 @@ namespace PatientDoctorApp.Controllers
         public IActionResult SelectedPatientUploadNote(string id, string EnterNotesTextArea)
         {
             Document document = new Document();
-            document.DocumentId = "4";
+            var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
+            var DoctorEmail = User.Identity.Name;
+            var loggedInDoctorsId = _context.Users.Where(m => m.Email == DoctorEmail).FirstOrDefault().Id;
             document.PatientId = id;
             document.AppointmentId = "1";
-            document.DoctorId = "1";
+            document.DoctorId = loggedInDoctorsId;
             document.Date = DateTime.Now;
             document.TestDate = DateTime.Now;
             document.Type = (int) type.Note;
@@ -219,10 +317,20 @@ namespace PatientDoctorApp.Controllers
             /*var Url = Request.Query["PatientId"];
             var PatientId = HttpContext.Request.Query["PatientId"];*/
             Document document = new Document();
-            document.DocumentId = "9";
+            var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
+            var DoctorEmail = User.Identity.Name;
+            var loggedInDoctorsId = _context.Users.Where(m => m.Email == DoctorEmail).FirstOrDefault().Id;
+            if (ListOfAllDocuments.Count == 0)
+            {
+                document.DocumentId = 1;
+            }
+            else
+            {
+                document.DocumentId = ListOfAllDocuments.LastOrDefault()!.DocumentId + 1;
+            }
             document.PatientId = id;
             document.AppointmentId = "1";
-            document.DoctorId = "1";
+            document.DoctorId = loggedInDoctorsId;
             document.Date = DateTime.Now;
             document.TestDate = DateTime.Now;
             document.Type = (int) type.Diagnosis;
@@ -254,7 +362,34 @@ namespace PatientDoctorApp.Controllers
 
         public IActionResult Schedule()
         {
+            var listOfLoggedInDoctorsAppointments = _context.Appointment.Where(m => m.DoctorId == _context.Users.Where(n => n.Email == User.Identity.Name).FirstOrDefault().Id).ToList();
+            var listOfPendingAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "PENDING" || m.Status == "CANCELLED" ).ToList();
+            ViewBag.listOfPendingAppointments = listOfPendingAppointments;
+            var listOfConfirmedAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "CONFIRMED").ToList();
+            ViewBag.listOfConfirmedAppointments = listOfConfirmedAppointments;
+            var listOfConfirmedAppointmentsNames = new List<string>();
+            foreach (var confirmedAppointment in listOfConfirmedAppointments)
+            {
+               string name = _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().FirstName.ToString() + _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().LastName.ToString();
+               listOfConfirmedAppointmentsNames.Add(name);
+            }
+            ViewBag.listOfConfirmedAppointmentsNames = listOfConfirmedAppointmentsNames;
+            
             return View();
+        }
+        
+        [HttpPost]
+        public IActionResult Schedule(Appointment appointmentId)
+        {
+            var appointment = _context.Appointment.Where(m => m.Id == appointmentId.Id).FirstOrDefault();
+            if (appointment != null)
+            {
+                appointment.Status = "CONFIRMED";
+                _context.Appointment.Update(appointment);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Schedule", "Doctor");
         }
         
         /// <summary>
@@ -333,6 +468,16 @@ namespace PatientDoctorApp.Controllers
         public string PatientId { get; set; }
         
         /// <summary>
+        /// Patient's latest Appointment
+        /// </summary>
+        public Appointment Appointment { get; set; }
+        
+        /// <summary>
+        /// Doctor's Name
+        /// </summary>
+        public string DoctorsName { get; set; }
+        
+        /// <summary>
         /// This is the constructor for the SelectedPatientLandingPageViewModel class.
         /// </summary>
         /// <param name="patientName"></param>
@@ -341,8 +486,9 @@ namespace PatientDoctorApp.Controllers
         /// <param name="prescriptions"></param>
         /// <param name="remarks"></param>
         /// <param name="patientId"></param>
+        /// <param name="appointment"></param>
         public SelectedPatientLandingPageViewModel(string patientName, string patientsAge, 
-            string diagnosis, string prescriptions, string remarks, string patientId)
+            string diagnosis, string prescriptions, string remarks, string patientId, Appointment appointment, string doctorsName)
         {
             PatientName = patientName;
             PatientsAge = patientsAge;
@@ -350,6 +496,8 @@ namespace PatientDoctorApp.Controllers
             Prescriptions = prescriptions;
             Remarks = remarks;
             PatientId = patientId;
+            Appointment = appointment;
+            DoctorsName = doctorsName;
         }
         
     }
@@ -385,6 +533,24 @@ namespace PatientDoctorApp.Controllers
             PatientsDiagnosis = patientsDiagnosis;
             PatientsTestReports = patientsTestReports;
             PatientsNotes = patientsNotes;
+        }
+    }
+
+    public class SelectedPatientUploadDocumentsViewModel
+    {
+        public string Name { get; set; }
+        public string Age { get; set; }
+        public Document TestReport { get; set; }
+        public Document Diagnosis { get; set; }
+        public Document Notes { get; set; }
+        
+        public SelectedPatientUploadDocumentsViewModel(string name, string age, Document testReport, Document diagnosis, Document notes)
+        {
+            Name = name;
+            Age = age;
+            TestReport = testReport;
+            Diagnosis = diagnosis;
+            Notes = notes;
         }
     }
     

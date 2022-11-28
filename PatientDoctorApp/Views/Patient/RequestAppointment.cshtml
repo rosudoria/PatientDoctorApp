@@ -8,136 +8,136 @@
     <h1 class="display-4">Request an Appointment</h1>
     <form asp-action="RequestAppointment" asp-controller="Patient" id="appointmentForm" method="post">
         <div class="accordion" id="accordionExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Enter Your Information
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="row g-3 align-items-center">
-                    <div class="form-floating col-sm-5">
-                        <input asp-for="MSPNumber" id="inputMSP" class="form-control"/>
-                        <label for="inputMSP">Enter Your MSP Number</label>
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-primary">NEXT</button>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Appointment Details
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="row g-3 align-items-center">
-                    <div class="col-auto">
-                        <select asp-for="AppointmentType" class="form-select" aria-label="Default select example">
-                          <option selected>SELECT AN APPOINTMENT TYPE</option>
-                          <option value="IN-PERSON">IN-PERSON</option>
-                          <option value="ONLINE">ONLINE</option>
-                        </select>
-                    </div>
-                    <div class="col-auto">
-                        <select asp-for="Reason" class="form-select" aria-label="Default select example">
-                          <option selected>SELECT AN APPOINTMENT REASON</option>
-                          <option value="RESULTS">RESULTS</option>
-                          <option value="FOLLOW-UP">FOLLOW-UP</option>
-                          <option value="OTHER">OTHER</option>
-                        </select>
-                    </div>
-                    <div class="form-floating">
-                        <input asp-for="Details" id="inputAddMsg" class="form-control"/>
-                        <label for="inputAddMsg">Additional Message (Optional)</label>
-                    </div>
-                    <div class="form-floating col-sm-5">
-                        <input asp-for="Email" id="inputEmail" class="form-control"/>
-                        <label for="inputEmail">Enter Email address</label>
-                    </div>
-                    <div class="form-floating col-sm-5">
-                        <input asp-for="Phone" id="inputPhoneNum" class="form-control"/>
-                        <label for="inputPhoneNum">Enter PhoneNumber</label>
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-primary">NEXT</button>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Enter Your Information
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="form-floating col-sm-5">
+                                <input asp-for="MSPNumber" id="inputMSP" class="form-control"/>
+                                <label for="inputMSP">Enter Your MSP Number</label>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary">NEXT</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Select a Time
-              </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                  <div class="row g-3 align-items-center">
-                    <div class="col-sm-5">
-                        <label for="startDate">Select Date</label>
-                        <input asp-for="Date" id="startDate" class="form-control" type="date" />
-                        <span id="startDateSelected"></span>
-                    </div>
-                    <div class="col-sm-5">
-                        <label form="startTime">Select Time</label>
-                        <select asp-for="TimeSlot" class="form-select" aria-label="Default select example">
-                          <option selected>SELECT A TIME SLOT</option>
-                          @foreach  (string time in ViewBag.TimeSlots)
-                          { <option value="@time">@time</option>}
-                        </select>
-                        @*<input type="time" class="form-control" value="10:05 AM" />*@
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-primary">NEXT</button>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                Book Appointment
-              </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="row g-3 align-items-center">
-                     <div class="col-auto">
-                        <select asp-for="DoctorId" class="form-select" aria-label="Default select example">
-                          <option selected>SELECT A DOCTOR</option>
-                          @foreach (PatientDoctorAppUser d in ViewBag.Doctors)
-		                   { <option value="@d.Id">Dr.@d.LastName</option>}
-                        </select>
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-primary">NEXT</button>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Appointment Details
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <select asp-for="AppointmentType" class="form-select" aria-label="Default select example">
+                                    <option selected>SELECT AN APPOINTMENT TYPE</option>
+                                    <option value="IN-PERSON">IN-PERSON</option>
+                                    <option value="ONLINE">ONLINE</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <select asp-for="Reason" class="form-select" aria-label="Default select example">
+                                    <option selected>SELECT AN APPOINTMENT REASON</option>
+                                    <option value="RESULTS">RESULTS</option>
+                                    <option value="FOLLOW-UP">FOLLOW-UP</option>
+                                    <option value="OTHER">OTHER</option>
+                                </select>
+                            </div>
+                            <div class="form-floating">
+                                <input asp-for="Details" id="inputAddMsg" class="form-control"/>
+                                <label for="inputAddMsg">Additional Message (Optional)</label>
+                            </div>
+                            <div class="form-floating col-sm-5">
+                                <input asp-for="Email" id="inputEmail" class="form-control"/>
+                                <label for="inputEmail">Enter Email address</label>
+                            </div>
+                            <div class="form-floating col-sm-5">
+                                <input asp-for="Phone" id="inputPhoneNum" class="form-control"/>
+                                <label for="inputPhoneNum">Enter PhoneNumber</label>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary">NEXT</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFive">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                Appointment Confirmation
-              </button>
-            </h2>
-            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                  <input type="hidden" value="@ViewBag.PatientId" asp-for="PatientId" />
-                  <input type="hidden" value="@ViewBag.AppointmentCount" asp-for="Id" />
-                  <input type="hidden" value="PENDING" asp-for="Status" />
-                <button id="appointmentSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Select a Time
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-sm-5">
+                                <label for="startDate">Select Date</label>
+                                <input asp-for="Date" id="startDate" class="form-control" type="date" />
+                                <span id="startDateSelected"></span>
+                            </div>
+                            <div class="col-sm-5">
+                                <label form="startTime">Select Time</label>
+                                <select asp-for="TimeSlot" class="form-select" aria-label="Default select example">
+                                    <option selected>SELECT A TIME SLOT</option>
+                                    @foreach  (string time in ViewBag.TimeSlots)
+                                    { <option value="@time">@time</option>}
+                                </select>
+                                @*<input type="time" class="form-control" value="10:05 AM" />*@
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary">NEXT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Book Appointment
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <select asp-for="DoctorId" class="form-select" aria-label="Default select example">
+                                    <option selected>SELECT A DOCTOR</option>
+                                    @foreach (PatientDoctorAppUser d in ViewBag.Doctors)
+                                    { <option value="@d.Id">Dr.@d.LastName</option>}
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary">NEXT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Appointment Confirmation
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <input type="hidden" value="@ViewBag.PatientId" asp-for="PatientId" />
+                        <input type="hidden" value="PENDING" asp-for="Status" />
+                        <button id="appointmentSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>
