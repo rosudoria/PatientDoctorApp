@@ -4,7 +4,8 @@ namespace PatientDoctorApp.Models
 {
     public class Appointment
     {
-        public string Details { get; set; }
+        public string? MSPNumber { get; set; }
+        public string? Details { get; set; }
 
         [Required(ErrorMessage = "Reason for visting is required")]
         public string Reason { get; set; }
@@ -29,9 +30,11 @@ namespace PatientDoctorApp.Models
         public string Phone { get; set; }
 
         public DateTime Date { get; set; }
+
+        public string TimeSlot { get; set; }
     }
 
-    enum StatusTypes
+    public enum StatusTypes
     {
         PENDING,
         ACCEPTED,
@@ -39,13 +42,13 @@ namespace PatientDoctorApp.Models
         COMPLEETED
     }
 
-    enum AppointmentType
+    public enum AppointmentType
     {
         INPERSON,
         ONLINE
     }
 
-    enum Reasons
+    public enum Reasons
     {
         FOLLOWUP,
         RESULTS,
