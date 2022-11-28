@@ -1,10 +1,12 @@
-﻿@{
+﻿@using PatientDoctorApp.Areas.Identity.Data
+@model Appointment
+@{
     ViewData["Title"] = "Request Appointment";
 }
 
 <div class="text-center">
     <h1 class="display-4">Request an Appointment</h1>
-    <form>
+    <form asp-action="RequestAppointment" asp-controller="Patient" id="appointmentForm" method="post">
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -16,7 +18,7 @@
               <div class="accordion-body">
                 <div class="row g-3 align-items-center">
                     <div class="form-floating col-sm-5">
-                        <input id="inputMSP" class="form-control"/>
+                        <input asp-for="MSPNumber" id="inputMSP" class="form-control"/>
                         <label for="inputMSP">Enter Your MSP Number</label>
                     </div>
                     <div class="col-auto">
@@ -36,30 +38,30 @@
               <div class="accordion-body">
                 <div class="row g-3 align-items-center">
                     <div class="col-auto">
-                        <select class="form-select" aria-label="Default select example">
+                        <select asp-for="AppointmentType" class="form-select" aria-label="Default select example">
                           <option selected>SELECT AN APPOINTMENT TYPE</option>
-                          <option value="1">IN-PERSON</option>
-                          <option value="2">ONLINE</option>
+                          <option value="IN-PERSON">IN-PERSON</option>
+                          <option value="ONLINE">ONLINE</option>
                         </select>
                     </div>
                     <div class="col-auto">
-                        <select class="form-select" aria-label="Default select example">
+                        <select asp-for="Reason" class="form-select" aria-label="Default select example">
                           <option selected>SELECT AN APPOINTMENT REASON</option>
-                          <option value="1">RESULTS</option>
-                          <option value="2">FOLLOW-UP</option>
-                          <option value="3">OTHER</option>
+                          <option value="RESULTS">RESULTS</option>
+                          <option value="FOLLOW-UP">FOLLOW-UP</option>
+                          <option value="OTHER">OTHER</option>
                         </select>
                     </div>
                     <div class="form-floating">
-                        <input id="inputAddMsg" class="form-control"/>
+                        <input asp-for="Details" id="inputAddMsg" class="form-control"/>
                         <label for="inputAddMsg">Additional Message (Optional)</label>
                     </div>
                     <div class="form-floating col-sm-5">
-                        <input id="inputEmail" class="form-control"/>
+                        <input asp-for="Email" id="inputEmail" class="form-control"/>
                         <label for="inputEmail">Enter Email address</label>
                     </div>
                     <div class="form-floating col-sm-5">
-                        <input id="inputPhoneNum" class="form-control"/>
+                        <input asp-for="Phone" id="inputPhoneNum" class="form-control"/>
                         <label for="inputPhoneNum">Enter PhoneNumber</label>
                     </div>
                     <div class="col-auto">
@@ -80,12 +82,17 @@
                   <div class="row g-3 align-items-center">
                     <div class="col-sm-5">
                         <label for="startDate">Select Date</label>
-                        <input id="startDate" class="form-control" type="date" />
+                        <input asp-for="Date" id="startDate" class="form-control" type="date" />
                         <span id="startDateSelected"></span>
                     </div>
                     <div class="col-sm-5">
                         <label form="startTime">Select Time</label>
-                        <input type="time" class="form-control" value="10:05 AM" />
+                        <select asp-for="TimeSlot" class="form-select" aria-label="Default select example">
+                          <option selected>SELECT A TIME SLOT</option>
+                          @foreach  (string time in ViewBag.TimeSlots)
+                          { <option value="@time">@time</option>}
+                        </select>
+                        @*<input type="time" class="form-control" value="10:05 AM" />*@
                     </div>
                     <div class="col-auto">
                         <button type="button" class="btn btn-primary">NEXT</button>
@@ -104,11 +111,10 @@
               <div class="accordion-body">
                 <div class="row g-3 align-items-center">
                      <div class="col-auto">
-                        <select class="form-select" aria-label="Default select example">
+                        <select asp-for="DoctorId" class="form-select" aria-label="Default select example">
                           <option selected>SELECT A DOCTOR</option>
-                          <option value="1">Dr.Matt Perry</option>
-                          <option value="2">Dr.Ross Geller</option>
-                          <option value="3">Dr.Jashan Sings</option>
+                          @foreach (PatientDoctorAppUser d in ViewBag.Doctors)
+		                   { <option value="@d.Id">Dr.@d.LastName</option>}
                         </select>
                     </div>
                     <div class="col-auto">
@@ -126,8 +132,10 @@
             </h2>
             <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <strong>This is the fifth item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
+                  <input type="hidden" value="@ViewBag.PatientId" asp-for="PatientId" />
+                  <input type="hidden" value="@ViewBag.AppointmentCount" asp-for="Id" />
+                  <input type="hidden" value="PENDING" asp-for="Status" />
+                <button id="appointmentSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
             </div>
           </div>
         </div>
