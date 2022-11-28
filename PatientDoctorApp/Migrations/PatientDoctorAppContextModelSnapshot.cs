@@ -263,7 +263,6 @@ namespace PatientDoctorApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -274,6 +273,10 @@ namespace PatientDoctorApp.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("MSPNumber")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -293,6 +296,11 @@ namespace PatientDoctorApp.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("TimeSlot")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
