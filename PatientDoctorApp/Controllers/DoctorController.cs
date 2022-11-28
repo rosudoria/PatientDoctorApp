@@ -145,8 +145,16 @@ namespace PatientDoctorApp.Controllers
         [HttpPost]
         public IActionResult SelectedPatientUploadTestReport(string id, string TitleOfTheReport, string Result, string Date)
         {
+            var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
             Document document = new Document();
-            document.DocumentId = "1";
+            if (ListOfAllDocuments.Count == 0)
+            {
+                document.DocumentId = "1";
+            }
+            else
+            {
+                document.DocumentId = (Int64.Parse(ListOfAllDocuments.LastOrDefault()!.DocumentId) + 1).ToString();
+            }
             document.PatientId = id;
             document.AppointmentId = "1";
             document.DoctorId = "1";
@@ -177,7 +185,15 @@ namespace PatientDoctorApp.Controllers
         public IActionResult SelectedPatientUploadNote(string id, string EnterNotesTextArea)
         {
             Document document = new Document();
-            document.DocumentId = "4";
+            var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
+            if (ListOfAllDocuments.Count == 0)
+            {
+                document.DocumentId = "1";
+            }
+            else
+            {
+                document.DocumentId = (Int64.Parse(ListOfAllDocuments.LastOrDefault()!.DocumentId) + 1).ToString();
+            }
             document.PatientId = id;
             document.AppointmentId = "1";
             document.DoctorId = "1";
@@ -219,7 +235,15 @@ namespace PatientDoctorApp.Controllers
             /*var Url = Request.Query["PatientId"];
             var PatientId = HttpContext.Request.Query["PatientId"];*/
             Document document = new Document();
-            document.DocumentId = "9";
+            var ListOfAllDocuments = _context.Document.OrderBy(m=>m.DocumentId).ToList();
+            if (ListOfAllDocuments.Count == 0)
+            {
+                document.DocumentId = "1";
+            }
+            else
+            {
+                document.DocumentId = (Int64.Parse(ListOfAllDocuments.LastOrDefault()!.DocumentId) + 1).ToString();
+            }
             document.PatientId = id;
             document.AppointmentId = "1";
             document.DoctorId = "1";

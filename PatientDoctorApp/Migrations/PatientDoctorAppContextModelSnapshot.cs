@@ -306,7 +306,7 @@ namespace PatientDoctorApp.Migrations
 
                     b.HasKey("DocumentId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Document", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
