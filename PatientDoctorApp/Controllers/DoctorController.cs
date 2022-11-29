@@ -129,9 +129,6 @@ namespace PatientDoctorApp.Controllers
             
             return View(viewModel);
         }
-        /*{
-            return View();
-        }*/
         
         /// <summary>
         /// This is the get method to display the type of documents to be uploaded.
@@ -367,14 +364,23 @@ namespace PatientDoctorApp.Controllers
         public IActionResult Schedule()
         {
             var listOfLoggedInDoctorsAppointments = _context.Appointment.Where(m => m.DoctorId == _context.Users.Where(n => n.Email == User.Identity.Name).FirstOrDefault().Id).ToList();
-            var listOfPendingAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "PENDING" ).ToList();
+            var listOfPendingAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "PENDING" ).ToList().OrderBy(m=>m.Date).ToList();
             ViewBag.listOfPendingAppointments = listOfPendingAppointments;
+            var listOfPendingAppoinmentsNames = new List<string>();
+            foreach (var appointment in listOfPendingAppointments)
+            {
+                string name = _context.Users.Where(m => m.Id == appointment.PatientId).FirstOrDefault().FirstName + " " + _context.Users.Where(m => m.Id == appointment.PatientId).FirstOrDefault().LastName;
+                listOfPendingAppoinmentsNames.Add(name);
+            }
+            ViewBag.listOfPendingAppoinmentsNames = listOfPendingAppoinmentsNames;
+            
+            
             var listOfConfirmedAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "CONFIRMED").ToList();
             ViewBag.listOfConfirmedAppointments = listOfConfirmedAppointments;
             var listOfConfirmedAppointmentsNames = new List<string>();
             foreach (var confirmedAppointment in listOfConfirmedAppointments)
             {
-               string name = _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().FirstName.ToString() + _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().LastName.ToString();
+               string name = _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().FirstName.ToString() + " " + _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().LastName.ToString();
                listOfConfirmedAppointmentsNames.Add(name);
             }
             ViewBag.listOfConfirmedAppointmentsNames = listOfConfirmedAppointmentsNames;
@@ -383,7 +389,7 @@ namespace PatientDoctorApp.Controllers
             var listOfCancelledAppointmentsNames = new List<string>();
             foreach (var cancelledAppointment in listOfCancelledAppointments)
             {
-                string name = _context.Users.Where(m => m.Id == cancelledAppointment.PatientId).FirstOrDefault().FirstName.ToString() + _context.Users.Where(m => m.Id == cancelledAppointment.PatientId).FirstOrDefault().LastName.ToString();
+                string name = _context.Users.Where(m => m.Id == cancelledAppointment.PatientId).FirstOrDefault().FirstName.ToString() + " " + _context.Users.Where(m => m.Id == cancelledAppointment.PatientId).FirstOrDefault().LastName.ToString();
                 listOfCancelledAppointmentsNames.Add(name);
             }
             ViewBag.listOfCancelledAppointmentsNames = listOfCancelledAppointmentsNames;
@@ -391,6 +397,11 @@ namespace PatientDoctorApp.Controllers
             return View();
         }
         
+        /// <summary>
+        /// Post method to confirm the appointment
+        /// </summary>
+        /// <param name="appointmentt"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Schedule(Appointment appointmentt)
         {
@@ -405,6 +416,11 @@ namespace PatientDoctorApp.Controllers
             return RedirectToAction("Schedule", "Doctor");
         }
         
+        /// <summary>
+        /// Post method to cancel the appointment
+        /// </summary>
+        /// <param name="appointmentt"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult CancelAppointment(Appointment appointmentt)
         {
@@ -438,6 +454,11 @@ namespace PatientDoctorApp.Controllers
             return RedirectToAction("Schedule", "Doctor");
         }
         
+        /// <summary>
+        /// This method is used to Complete the selected patient's appointment
+        /// </summary>
+        /// <param name="appointmentt"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult CompleteAppointment(Appointment appointmentt)
         {
@@ -596,6 +617,9 @@ namespace PatientDoctorApp.Controllers
         }
     }
 
+    /// <summary>
+    /// This is the View model class for the SelectedPatientUploadDocument method.
+    /// </summary>
     public class SelectedPatientUploadDocumentsViewModel
     {
         public string Name { get; set; }
