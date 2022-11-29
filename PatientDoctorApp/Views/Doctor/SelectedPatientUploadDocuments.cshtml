@@ -1,4 +1,5 @@
 ﻿@using PatientDoctorApp.Controllers
+@model SelectedPatientUploadDocumentsViewModel
 
 @{
     ViewBag.Title = "Upload Documents";
@@ -82,6 +83,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: fit-content;
         }
         #NextMeetingWithPatientCard{
             display: flex;
@@ -124,25 +126,13 @@
         }
         #UploadComponents
         {
-            display: grid;
-            grid-template-columns: 1fr 2.5fr;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: fit-content ;
-            margin: auto;
-        }
-        #SelectUploadType{
             display: flex;
             flex-direction: column;
-            align-items: start;
-            justify-content: center;
-            width: fit-content;
-            height: 100%;
-            padding: 0 20px;
-            border-right: 1px solid #6c757d;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
-        #UploadDocumentRightSide{
+        #SelectUploadType{
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -153,6 +143,7 @@
         }
         .RadioGroup{
             font-size: larger;
+            align-items: center;
         }
         #UploadButton{
             width: 100%;
@@ -173,24 +164,21 @@
         let upload_button = document.getElementById("UploadButton");
         if(radio_button.value === "TestReport"){
             document.getElementById("UploadButton").innerHTML = "Upload Test Report";
-            document.getElementById("DocumentType").innerHTML = "Test Report";
             document.getElementById("UploadButton").addEventListener("click", function(){
-                window.location.href = '@Url.Action("SelectedPatientUploadTestReport", "Doctor")';
+                window.location.href = '@Url.Action("SelectedPatientUploadTestReport", "Doctor", new { PatientId = @ViewBag.PatientId })';
             });
 
         }
         else if(radio_button.value === "Note"){
             document.getElementById("UploadButton").innerHTML = "Upload Note";
-            document.getElementById("DocumentType").innerHTML = "Note";
             document.getElementById("UploadButton").addEventListener("click", function(){
-                            window.location.href = '@Url.Action("SelectedPatientUploadNote", "Doctor")';
+                            window.location.href = '@Url.Action("SelectedPatientUploadNote", "Doctor" , new { PatientId = @ViewBag.PatientId })';
             });
         }
         else if(radio_button.value === "Diagnosis"){
             document.getElementById("UploadButton").innerHTML = "Upload Diagnosis";
-            document.getElementById("DocumentType").innerHTML = "Diagnosis";
             document.getElementById("UploadButton").addEventListener("click", function(){
-                window.location.href = '@Url.Action("SelectedPatientUploadDiagnosis", "Doctor")';
+                window.location.href = '@Url.Action("SelectedPatientUploadDiagnosis", "Doctor", new { PatientId = @ViewBag.PatientId })';
             });
         }
     }
@@ -210,16 +198,17 @@
         </div>
         <div id="ProfileInfo">
             <div id="ProfileInfoInnerDiv">
-                <p id="ProfileName">Name: John Doe</p>
-                <p id="ProfileAge">Age: 30yrs</p>
+                <p id="ProfileName">Name: @Model.Name</p>
+                <p id="ProfileAge">Age: @Model.Age</p>
             </div>
         </div>
     </div>
     <div class="div2">
         <div id="NextMeetingWithPatientCard">
             <h4 id="NextMeetingHeading">Next Meeting</h4>
-            <p id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</p>
-            <p id="MeetingConfirmation">confirmed</p>
+            <p id="NextMeetingDate">Date: @ViewBag.EarliestAppointment.Date.Date.ToShortDateString() <br/> Time: @ViewBag.EarliestAppointment.TimeSlot</p>
+            <p id="MeetingConfirmation"><b>@ViewBag.EarliestAppointment.Status</b></p>
+            <p id="DoctorAssigned">@ViewBag.DoctorsName</p>
         </div>
     </div>
 </div>
@@ -248,20 +237,24 @@
                 <label for="Diagnosis">Diagnosis</label>
             </div>
         </div>
-        <div id="UploadDocumentRightSide">
-            <h3 id="DocumentType">Test Report</h3>
-            <p id="LastAvailableInfo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                It has survived not only five centuries, but also the leap into electronic typesetting.
-            </p>
-            <button id="UploadButton" 
-                    onclick="window.location= '@Url.Action("SelectedPatientUploadTestReport", "Doctor")'">
-                Upload Test Report
-            </button>
-        </div>
+        <button id="UploadButton" 
+                onclick="window.location= '@Url.Action("SelectedPatientUploadTestReport", "Doctor", new {PatientId = @ViewBag.PatientId})'">
+            Upload Test Report
+        </button>
+        
     </div>
 </div>
+
+<a asp-controller="Doctor" asp-action="SelectedPatientLandingPage" style="{
+    text-decoration: solid;
+}"
+   onclick="window.location.href = '@Url.Action("SelectedPatientLandingPage", "Doctor", new {PatientId = @ViewBag.PatientId})'" asp-route-id="@ViewBag.PatientId">
+    <button id="BackButton" class="PatientProfileButtons" style="{
+        position: fixed;
+    }">
+        Back to Patient Profile
+    </button>
+</a>
 
 </body>
 </html>

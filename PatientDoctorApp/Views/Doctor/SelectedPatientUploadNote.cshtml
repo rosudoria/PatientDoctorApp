@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+
 @{
     ViewBag.Title = "Upload Note";
 }
@@ -139,7 +140,7 @@
 <div id="UploadNoteCard">
     <h1 id="Heading">Upload Notes</h1>
     <div id="InnerUploadDiv">
-        <form id="TextAreaForm" onsubmit="return checkUpload()">
+        <form id="TextAreaForm" onsubmit="return checkUpload()" asp-controller="Doctor" asp-action="SelectedPatientUploadNote" method="post" asp-route-id="@ViewBag.PatientId">
             <div id="TextAreaDiv">
                 <label for="EnterNotesTextArea" id="EnterNotesHeading">Enter Notes:</label>
                 <textarea id="EnterNotesTextArea" name="EnterNotesTextArea" rows="5" ></textarea>
@@ -155,7 +156,7 @@
             <input type="submit" value="Upload Notes" id="UploadNotesButton"/>
         </form>
         <button id="CancelButton" 
-                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor", new{PatientId = @ViewBag.PatientId})'">
             Cancel
         </button>
         

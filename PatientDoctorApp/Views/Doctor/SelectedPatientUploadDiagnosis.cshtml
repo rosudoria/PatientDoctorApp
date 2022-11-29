@@ -128,7 +128,7 @@
         Upload Patient Diagnosis
     </h1>
     <div id="InnerUploadCard">
-        <form id="UploadDiagnosisForm" onsubmit="return checkUpload()">
+        <form id="UploadDiagnosisForm" onsubmit="return checkUpload()" asp-controller="Doctor" asp-action="SelectedPatientUploadDiagnosis" asp-route-id="@ViewBag.PatientID" method="post">
             <div id="ConditionStatusDiv" class="FormItem">
                 <label for="ConditionStatus">ConditionStatus</label>
                 <textarea name="ConditionStatus" id="ConditionStatus"></textarea>
@@ -151,10 +151,10 @@
                     Add Signature
                 </label>
             </div>
-            <input type="submit" value="Upload Diagnosis" id="UploadDiagnosisButton"/>
+            <input type="submit" value="Upload Diagnosis" id="UploadDiagnosisButton">
         </form>
         <button id="CancelButton"
-                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
+                onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor", new {PatientID = @ViewBag.PatientID})'">
             Cancel
         </button>
     </div>

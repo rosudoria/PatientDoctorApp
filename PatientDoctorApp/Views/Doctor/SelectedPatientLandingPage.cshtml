@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PatientDoctorApp.Controllers.SelectedPatientLandingPageViewModel
+@{
     ViewBag.Title = "Patient Home";
 }
 
@@ -114,6 +115,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: fit-content;
         }
         #NextMeetingWithPatientCard{
             display: flex;
@@ -193,70 +195,90 @@
         <h1>Patient Profile</h1>
     *@
     </div>
-    <div class="parent">
-        <div class="div1">
-            <div id="ProfilePic">
-                <img id="ProfilePicImage" src="https://via.placeholder.com/130" alt="Avatar"> 
-            </div>
-            <div id="ProfileInfo">
-                <div id="ProfileInfoInnerDiv">
-                    <p id="ProfileName">Name: John Doe</p>
-                    <p id="ProfileAge">Age: 30yrs</p>
-                </div>
+<div class="parent">
+    <div class="div1">
+        <div id="ProfilePic">
+            <img id="ProfilePicImage" src="https://via.placeholder.com/130" alt="Avatar"> 
+        </div>
+        <div id="ProfileInfo">
+            <div id="ProfileInfoInnerDiv">
+                <p id="ProfileName">Name: @Model.PatientName</p>
+                <p id="ProfileAge">Age:
+                    @Model.PatientsAge yrs</p>
             </div>
         </div>
-        <div class="div2">
-            <div id="NextMeetingWithPatientCard">
-                <h4 id="NextMeetingHeading">Next Meeting</h4>
-                <p id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</p>
-                <p id="MeetingConfirmation">confirmed</p>
-            </div>
+    </div>
+    <div class="div2">
+        <div id="NextMeetingWithPatientCard">
+            <h4 id="NextMeetingHeading">Next Meeting</h4>
+            <p id="NextMeetingDate">Date: @Model.Appointment.Date.Date.ToShortDateString() <br/> Time: @Model.Appointment.TimeSlot</p>
+            <p id="MeetingConfirmation"><b>@Model.Appointment.Status</b></p>
+            <p id="DoctorAssigned">@Model.DoctorsName</p>
         </div>
+    </div>
     <div class="div3">
         <div id="PatientStatusCard">
             <div id="PatientCondition">
                 <h3 id="ConditionHeading">Patient Condition Status</h3>
                 <p id="ConditionParagraph">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type
-                    specimen book.
+                    @Model.Diagnosis
                 </p>
             </div>
             <div id="Prescription">
                 <h3 id="PrescriptionHeading">Prescription</h3>
-                <ol id="PrescriptionList">
-                    <li>Medicine 1</li>
-                    <li>Medicine 2</li>
-                    <li>Medicine 3</li>
-                </ol>
+                <p>@Model.Prescriptions</p>
             </div>
             <div id="Remarks">
                 <h3>Remarks</h3>
                 <p id="RemarksParagraph">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    @Model.Remarks
+                </p>
+                
             </div>
         </div>
         
     </div>
-        <div class="div4">
-            <div id="PatientRequests">
-                <h3 id="PatientRequestHeading">Requests</h3>
-                <p id="PatientRequestParagraph">
-                    No requests from the Patient yet.
-                </p>
-            </div>
-            <div id="ButtonGroup">
-                <button id="ViewPatientHistory" class="PatientProfileButtons">
-                    View Patient History
-                </button>
-                <button id="UploadDocuments" class="PatientProfileButtons"
-                        onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor")'">
-                    Upload Documents
-                </button>
-            </div>
+    <div class="div4">
+        <div id="PatientRequests">
+            <h3 id="PatientRequestHeading">Requests</h3>
+            <p id="PatientRequestParagraph">
+                @Model.Appointment.Details
+            </p>
         </div>
+        <div id="ButtonGroup">
+            <button id="ViewPatientHistory" class="PatientProfileButtons"
+                    asp-controller="Doctor"
+                    asp-action="SelectedPatientViewDocuments"
+                    asp-route-id="@Model.PatientId"
+                    onclick="window.location.href = '@Url.Action("SelectedPatientViewDocuments", "Doctor", new { PatientId = @Model.PatientId })'">
+                View Patient History
+            </button>
+            <button id="UploadDocuments" class="PatientProfileButtons"
+                    asp-controller="Doctor"
+                    asp-action="SelectedPatientUploadDocuments"
+                    onclick="window.location= '@Url.Action("SelectedPatientUploadDocuments", "Doctor", new {PatientId= @Model.PatientId })'"
+                    asp-route-id="@Model.PatientId"
+            >
+                Upload Documents
+            </button>
         </div>
+    </div>
+</div>
+<a asp-controller="Doctor" asp-action="SelectPatient">
+    <button style="{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        margin: 20px;
+        width: 100px;
+        height: 50px;
+        border: 2px solid #6c757d;
+        border-radius: 20px;
+        font-size: larger;
+        box-shadow: 3px 3px #888888;
+    }">
+        Back to Patients List
+    </button>
+</a>
 </body>
 </html>

@@ -1,83 +1,139 @@
-﻿@*
-    
-*@
+﻿@model Appointment
 @{
     ViewData["Title"] = "Doctors Schedule";
 }
 
-<div class="text-center" style="{}">
-    <h1 class="display-4">Welcome to Doctors Schedule</h1>
-    <ul class="nav nav-tabs col-6 offset-3" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
+<h1 class="display-4">Welcome to Doctors Schedule</h1>
+<ul class="nav nav-tabs col-6 offset-3" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
         <button class="nav-link active" id="Today-tab" data-bs-toggle="tab" data-bs-target="#Today" type="button" role="tab" aria-controls="Today" aria-selected="true">Today</button>
-      </li>
-      <li class="nav-item" role="presentation">
+    </li>
+    <li class="nav-item" role="presentation">
         <button class="nav-link" id="Tomorrow-tab" data-bs-toggle="tab" data-bs-target="#Tomorrow" type="button" role="tab" aria-controls="Tomorrow" aria-selected="false">Tomorrow</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab" aria-controls="calendar" aria-selected="false">Calendar</button>
-      </li>
-      <li class="nav-item" role="presentation">
+    </li>
+    @*<li class="nav-item" role="presentation">
+            <button class="nav-link" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab" aria-controls="calendar" aria-selected="false">Calendar</button>
+        </li>*@
+    <li class="nav-item" role="presentation">
         <button class="nav-link" id="requests-tab" data-bs-toggle="tab" data-bs-target="#requests" type="button" role="tab" aria-controls="requests" aria-selected="false">requests</button>
-      </li>
-    </ul>
-    <div class="tab-content col-6 offset-3" id="myTabContent">
-        <div class="tab-pane fade show active overflow-auto" id="Today" role="tabpanel" aria-labelledby="Today-tab">
-            <div class="accordion col-6 offset-3" id="accordionExample">
+    </li>
+    @*<li class="nav-item" role="presentation">
+            <button class="nav-link" id="Cancelled-tab" data-bs-toggle="tab" data-bs-target="#Cancelled" type="button" role="tab" aria-controls="Cancelled" aria-selected="false">Cancelled</button>
+        </li>*@
+</ul>
+<div class="tab-content col-6 offset-3" id="myTabContent">
+<div class="tab-pane fade show active overflow-auto" id="Today" role="tabpanel" aria-labelledby="Today-tab">
+    @for (int i = 0; i < ViewBag.listOfConfirmedAppointments.Count; i++)
+    {
+        if (ViewBag.listOfConfirmedAppointments[i].Date.Date == DateTime.Today.Date)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfConfirmedAppointments[i].Id" aria-expanded="true"
+                            aria-controls="collapse-@ViewBag.listOfConfirmedAppointments[i].Id">
+                        <b>@ViewBag.listOfConfirmedAppointmentsNames[i]</b> - @ViewBag.listOfConfirmedAppointments[i].TimeSlot
+                    </button>
+                </h2>
+                <div id="collapse-@ViewBag.listOfConfirmedAppointments[i].Id" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
+                    <div class="accordion-body">
+                        <p>
+                            <b>Type: </b> @ViewBag.listOfConfirmedAppointments[i].AppointmentType <br/>
+                            <b>Reason: </b> @ViewBag.listOfConfirmedAppointments[i].Reason <br/>
+                            <b>Details(Optional): </b> @ViewBag.listOfConfirmedAppointments[i].Details <br/>
+                            <b>Phone Number: </b> @ViewBag.listOfConfirmedAppointments[i].Phone <br/>
+                            <b>MSP Number: </b> @ViewBag.listOfConfirmedAppointments[i].MSPNumber <br/>
+                            <b>Time Slot: </b> @ViewBag.listOfConfirmedAppointments[i].TimeSlot <br/>
+                            <b>Date: </b> @ViewBag.listOfConfirmedAppointments[i].Date <br/>
+                            <b>Status: </b> @ViewBag.listOfConfirmedAppointments[i].Status <br/>
+                            <b>Email: </b> @ViewBag.listOfConfirmedAppointments[i].Email <br/>
+                        </p>
+
+                        <form asp-controller="Doctor" asp-action="CancelAppointment" method="post" >
+                            <input type="hidden" value=@ViewBag.listOfConfirmedAppointments[i].Id asp-for="Id"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Date" asp-for="Date"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].AppointmentType" asp-for="AppointmentType"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Reason" asp-for="Reason"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Details" asp-for="Details"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].PatientId" asp-for="PatientId"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].DoctorId" asp-for="DoctorId"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Status" asp-for="Status"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Email" asp-for="Email"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].TimeSlot" asp-for="TimeSlot"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].MSPNumber" asp-for="MSPNumber"/>
+                            <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Phone" asp-for="Phone"/>
+                            <button type="submit" class="btn badge bg-danger" onclick="return confirm('Are you sure you want to cancel the appointment?')" asp-action="CancelAppointment" asp-controller="Doctor">Cancel</button>
+                            <button type="submit" class="btn badge bg-success" onclick="return confirm('Are you sure you want to mark this appointment as COMPLETED?')" asp-controller="Doctor" asp-action="CompleteAppointment">Complete</button>
+                        </form>
+                        @*<form asp-controller="Doctor" asp-action="CompleteAppointment" method="post" onsubmit="return confirm('Are you sure you want to mark this appointment as COMPLETE?')">
+                                    <input type="hidden" value=@ViewBag.listOfConfirmedAppointments[i].Id asp-for="Id"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Date" asp-for="Date"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].AppointmentType" asp-for="AppointmentType"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Reason" asp-for="Reason"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Details" asp-for="Details"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].PatientId" asp-for="PatientId"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].DoctorId" asp-for="DoctorId"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Status" asp-for="Status"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Email" asp-for="Email"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].TimeSlot" asp-for="TimeSlot"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].MSPNumber" asp-for="MSPNumber"/>
+                                    <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Phone" asp-for="Phone"/>
+                                    <button type="submit">Complete</button>
+                                </form>*@
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+<div class="tab-pane fade overflow-auto" id="Tomorrow" role="tabpanel" aria-labelledby="Tomorrow-tab">
+    <div class="accordion col-6 offset-3" id="accordionExample">
+        @for (int i = 0; i < ViewBag.listOfConfirmedAppointments.Count; i++)
+        {
+            if (ViewBag.listOfConfirmedAppointments[i].Date.Date == DateTime.Today.AddDays(1).Date)
+            {
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                         9:00am John Doe
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfConfirmedAppointments[i].Id" aria-expanded="true"
+                                aria-controls="collapse-@ViewBag.listOfConfirmedAppointments[i].Id">
+                            <b>@ViewBag.listOfConfirmedAppointmentsNames[i]</b> - @ViewBag.listOfConfirmedAppointments[i].TimeSlot
                         </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapse-@ViewBag.listOfConfirmedAppointments[i].Id" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
                         <div class="accordion-body">
-                         Appointment details here
+                            <p>
+                                <b>Type: </b> @ViewBag.listOfConfirmedAppointments[i].AppointmentType <br/>
+                                <b>Reason: </b> @ViewBag.listOfConfirmedAppointments[i].Reason <br/>
+                                <b>Details(Optional): </b> @ViewBag.listOfConfirmedAppointments[i].Details <br/>
+                                <b>Phone Number: </b> @ViewBag.listOfConfirmedAppointments[i].Phone <br/>
+                                <b>MSP Number: </b> @ViewBag.listOfConfirmedAppointments[i].MSPNumber <br/>
+                                <b>Time Slot: </b> @ViewBag.listOfConfirmedAppointments[i].TimeSlot <br/>
+                                <b>Date: </b> @ViewBag.listOfConfirmedAppointments[i].Date <br/>
+                                <b>Status: </b> @ViewBag.listOfConfirmedAppointments[i].Status <br/>
+                                <b>Email: </b> @ViewBag.listOfConfirmedAppointments[i].Email <br/>
+                            </p>
+                            <form asp-controller="Doctor" asp-action="CancelAppointment" method="post" onsubmit="return confirm('Are you sure you want to cancel this appointment?')">
+                                <input type="hidden" value=@ViewBag.listOfConfirmedAppointments[i].Id asp-for="Id"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Date" asp-for="Date"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].AppointmentType" asp-for="AppointmentType"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Reason" asp-for="Reason"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Details" asp-for="Details"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].PatientId" asp-for="PatientId"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].DoctorId" asp-for="DoctorId"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Status" asp-for="Status"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Email" asp-for="Email"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].TimeSlot" asp-for="TimeSlot"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].MSPNumber" asp-for="MSPNumber"/>
+                                <input type="hidden" value="@ViewBag.listOfConfirmedAppointments[i].Phone" asp-for="Phone"/>
+                                <button type="submit" class="btn badge bg-danger">Cancel</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                         10:00am John Cena
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
-        </div>
+            }
+        }
     </div>
-    <div class="tab-pane fade overflow-auto" id="Tomorrow" role="tabpanel" aria-labelledby="Tomorrow-tab">
-        <div class="accordion col-6 offset-3" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                     1:00pm John Doever
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFour">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                     2:00pm Senna Queena
-                    </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+@*
     <div class="tab-pane fade overflow-auto" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
         <div id="calendar-container" class="col-6 offset-3">
             <label for="startDate">Select Date</label>
@@ -85,12 +141,99 @@
             <span id="startDateSelected"></span>
         </div>
     </div>
-    <div class="tab-pane fade overflow-auto" id="requests" role="tabpanel" aria-labelledby="requests-tab">
-        <button onclick="alertPending()" class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-warning">Pending</span></button>
-        <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-success">Approved</span></a>
-        <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-danger">Canceled</span></a>
+    *@
+<div class="tab-pane fade overflow-auto" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+    @for (int i = 0; i < ViewBag.listOfPendingAppointments.Count; i++)
+    {
+        <form method="post">
+            @*
+                                asp-controller="Doctor" asp-action="Schedule" 
+                                *@
+            <a class="btn">@ViewBag.listOfPendingAppointments[i].Date.Date.ToShortDateString() @ViewBag.listOfPendingAppointments[i].TimeSlot - @ViewBag.listOfPendingAppoinmentsNames[i]
+                <span>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].Id asp-for="Id"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].Date asp-for="Date"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].TimeSlot asp-for="TimeSlot"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].PatientId asp-for="PatientId"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].DoctorId asp-for="DoctorId"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].Status asp-for="Status"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].Reason asp-for="Reason"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].MSPNumber asp-for="MSPNumber"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].AppointmentType asp-for="AppointmentType"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].Phone asp-for="Phone"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].Email asp-for="Email"/>
+                    <input type="hidden" value=@ViewBag.listOfPendingAppointments[i].Details asp-for="Details"/>
+                    <button type="submit" class="btn badge bg-success" asp-controller="Doctor" asp-action="ConfirmAppointment" onclick="return confirm('Are you sure you want to Confirm this appointment?')">CONFIRM</button>
+                    <button type="submit" class="btn badge bg-danger" asp-controller="Doctor" asp-action="CancelAppointment" onclick="return confirm('Are you sure you want to mark this appointment as CANCELLED?')">CANCEL</button>
+                </span>
+            </a>
+        </form>
+            @*<form asp-controller="Doctor" asp-action="CancelAppointment" method="post">
+                    <span class="btn badge bg-danger">
+                        <input type="hidden" value=@pendingAppointment.Id asp-for="Id"/>
+                        <input type="hidden" value=@pendingAppointment.Date asp-for="Date"/>
+                        <input type="hidden" value=@pendingAppointment.TimeSlot asp-for="TimeSlot"/>
+                        <input type="hidden" value=@pendingAppointment.PatientId asp-for="PatientId"/>
+                        <input type="hidden" value=@pendingAppointment.DoctorId asp-for="DoctorId"/>
+                        <input type="hidden" value=@pendingAppointment.Status asp-for="Status"/>
+                        <input type="hidden" value=@pendingAppointment.Reason asp-for="Reason"/>
+                        <input type="hidden" value=@pendingAppointment.MSPNumber asp-for="MSPNumber"/>
+                        <input type="hidden" value=@pendingAppointment.AppointmentType asp-for="AppointmentType"/>
+                        <input type="hidden" value=@pendingAppointment.Phone asp-for="Phone"/>
+                        <input type="hidden" value=@pendingAppointment.Email asp-for="Email"/>
+                        <input type="hidden" value=@pendingAppointment.Details asp-for="Details"/>
+                        <button type="submit">Cancel</button>
+                    </span>
+            </form>*@
+
+        <br/>
+    }
+    @*<button onclick="aprovePending()" class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-warning">Pending</span></button>
+            <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-success">Approved</span></a>
+            <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-danger">Canceled</span></a>*@
+</div>
+@*
+    <div class="tab-pane fade overflow-auto" id="Cancelled" role="tabpanel" aria-labelledby="Cancelled-tab">
+        <div class="accordion col-6 offset-3" id="accordionExample">
+            @for(int i = 0; i < ViewBag.listOfCancelledAppointments.Count; i++){
+                <div class="accordion-item" style="{
+                         width: 60%;
+                      }" >
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfCancelledAppointments[i].Id" aria-expanded="true"
+                                aria-controls="collapse-@ViewBag.listOfCancelledAppointments[i].Id">
+                            @ViewBag.listOfCancelledAppointmentsNames[i]
+                        </button>
+                    </h2>
+                    <div id="collapse-@ViewBag.listOfCancelledAppointments[i].Id" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
+                        <div class="accordion-body">
+                            <p>
+                                <b>Type: </b> @ViewBag.listOfCancelledAppointments[i].AppointmentType <br/>
+                                <b>Reason: </b> @ViewBag.listOfCancelledAppointments[i].Reason <br/>
+                                <b>Details(Optional): </b> @ViewBag.listOfCancelledAppointments[i].Details <br/>
+                            </p>
+                            <form asp-controller="Doctor" asp-action="ConfirmAppointment" method="post">
+                                <input type="hidden" value=@ViewBag.listOfCancelledAppointments[i].Id asp-for="Id"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].Date" asp-for="Date"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].AppointmentType" asp-for="AppointmentType"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].Reason" asp-for="Reason"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].Details" asp-for="Details"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].PatientId" asp-for="PatientId"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].DoctorId" asp-for="DoctorId"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].Status" asp-for="Status"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].Email" asp-for="Email"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].TimeSlot" asp-for="TimeSlot"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].MSPNumber" asp-for="MSPNumber"/>
+                                <input type="hidden" value="@ViewBag.listOfCancelledAppointments[i].Phone" asp-for="Phone"/>
+                                <button type="submit">Confirm</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-    </div>
+*@
 </div>
 
 <script>
