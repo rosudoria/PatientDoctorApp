@@ -23,7 +23,7 @@
                                 <label for="inputMSP">Enter Your MSP Number</label>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-primary">NEXT</button>
+                                @*<button type="button" class="btn btn-primary">NEXT</button>*@
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                 <label for="inputPhoneNum">Enter PhoneNumber</label>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-primary">NEXT</button>
+                                @*<button type="button" class="btn btn-primary">NEXT</button>*@
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                                 @*<input type="time" class="form-control" value="10:05 AM" />*@
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-primary">NEXT</button>
+                                @*<button type="button" class="btn btn-primary">NEXT</button>*@
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                                 </select>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-primary">NEXT</button>
+                                <@*button type="button" class="btn btn-primary">NEXT</button>*@
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                 </h2>
                 <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <input value="@Model.PatientId" asp-for="@Model.Appointment.PatientId" />
+                        <input type="hidden" value="@Model.PatientId" asp-for="@Model.Appointment.PatientId" />
                         <input type="hidden" value="PENDING" asp-for="@Model.Appointment.Status" />
                         <button id="appointmentSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
                     </div>
