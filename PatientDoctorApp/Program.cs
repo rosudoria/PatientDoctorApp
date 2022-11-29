@@ -12,6 +12,7 @@ builder.Services.AddDbContext<PatientDoctorAppContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<PatientDoctorAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PatientDoctorAppContext>();
 builder.Services.AddControllersWithViews();
 

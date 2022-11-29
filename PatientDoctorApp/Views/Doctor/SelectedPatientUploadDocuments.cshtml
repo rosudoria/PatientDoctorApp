@@ -83,6 +83,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: fit-content;
         }
         #NextMeetingWithPatientCard{
             display: flex;
@@ -205,8 +206,9 @@
     <div class="div2">
         <div id="NextMeetingWithPatientCard">
             <h4 id="NextMeetingHeading">Next Meeting</h4>
-            <p id="NextMeetingDate">Date: 12/12/2019<br> 9:00 am</p>
-            <p id="MeetingConfirmation">confirmed</p>
+            <p id="NextMeetingDate">Date: @ViewBag.EarliestAppointment.Date.Date.ToShortDateString() <br/> Time: @ViewBag.EarliestAppointment.TimeSlot</p>
+            <p id="MeetingConfirmation"><b>@ViewBag.EarliestAppointment.Status</b></p>
+            <p id="DoctorAssigned">@ViewBag.DoctorsName</p>
         </div>
     </div>
 </div>

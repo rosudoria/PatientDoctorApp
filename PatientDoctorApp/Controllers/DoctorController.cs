@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PatientDoctorApp.Areas.Identity.Data;
 using PatientDoctorApp.Data;
@@ -16,11 +17,14 @@ namespace PatientDoctorApp.Controllers
         {
             _context = context;
         }
+        
+        [Authorize(Roles = "Doctor")]
         public IActionResult DoctorIndex()
         {
             return View();
         }
         
+        [Authorize(Roles = "Doctor")]
         public IActionResult DoctorProfile()
         {
             return View();
@@ -32,6 +36,7 @@ namespace PatientDoctorApp.Controllers
         /// <returns>
         /// The view of the list of patients.
         /// </returns>
+        [Authorize(Roles = "Doctor")]
         public IActionResult SelectPatient()
         {
             var PatientDoctorAppUsers = _context.Users.OrderBy(m => m.RoleId).ToList();
@@ -57,6 +62,7 @@ namespace PatientDoctorApp.Controllers
         /// <returns>
         /// The view of the patient's details.
         /// </returns>
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public IActionResult SelectedPatientLandingPage(string id)
         {
@@ -136,6 +142,7 @@ namespace PatientDoctorApp.Controllers
         /// <returns>
         /// The view of the Document Select component.
         /// </returns>
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public IActionResult SelectedPatientUploadDocuments()
         {
@@ -203,6 +210,20 @@ namespace PatientDoctorApp.Controllers
                 PatientsLatestDiagnosis = null;
             }
             
+            var listOfAppointments = _context.Appointment.OrderBy(m => m.PatientId).Where(m => m.Status == "PENDING" || m.Status == "CONFIRMED").ToList().Where(m => m.PatientId == PatientId).OrderBy(m=>m.Date);
+            var earliestAppointment = listOfAppointments.FirstOrDefault();
+            var DoctorsName = "";
+            if (earliestAppointment != null)
+            {
+                var DoctorId = earliestAppointment.DoctorId;
+                DoctorsName = "Dr. " + _context.Users.Find(DoctorId).FirstName + " " + _context.Users.Find(DoctorId).LastName;
+            }
+            else
+            {
+                earliestAppointment = new Appointment();
+            }
+            ViewBag.EarliestAppointment = earliestAppointment;
+            ViewBag.DoctorsName = DoctorsName;
             var viewModel = new SelectedPatientUploadDocumentsViewModel(PatientName, PatientAge, PatientsLatestTestReport, PatientsLatestNote, PatientsLatestDiagnosis);
 
             return View(viewModel);
@@ -212,6 +233,7 @@ namespace PatientDoctorApp.Controllers
         /// This method is used to get the selected patient's Test Report from the database
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public IActionResult SelectedPatientUploadTestReport()
         {
@@ -227,6 +249,7 @@ namespace PatientDoctorApp.Controllers
         /// <param name="Result">a string</param>
         /// <param name="Date">a string</param>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public IActionResult SelectedPatientUploadTestReport(string id, string TitleOfTheReport, string Result, string Date)
         {
@@ -270,6 +293,7 @@ namespace PatientDoctorApp.Controllers
         /// </summary>
         /// <param name="EnterNotesTextArea">a string</param>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public IActionResult SelectedPatientUploadNote(string id, string EnterNotesTextArea)
         {
@@ -297,6 +321,7 @@ namespace PatientDoctorApp.Controllers
         /// This method is used to get the selected patient's Diagnosis from the database
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public IActionResult SelectedPatientUploadNote()
         {
@@ -312,9 +337,9 @@ namespace PatientDoctorApp.Controllers
         /// <param name="Prescriptions">a string</param>
         /// <param name="Remarks">a string</param>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
-        public IActionResult SelectedPatientUploadDiagnosis(string id, string ConditionStatus, string Prescriptions, string Remarks)
-        {
+        public IActionResult SelectedPatientUploadDiagnosis(string id, string ConditionStatus, string Prescriptions, string Remarks){
             /*var Url = Request.Query["PatientId"];
             var PatientId = HttpContext.Request.Query["PatientId"];*/
             Document document = new Document();
@@ -353,6 +378,7 @@ namespace PatientDoctorApp.Controllers
         /// This method is used to get the selected patient's Note from the database
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpGet]
         public IActionResult SelectedPatientUploadDiagnosis()
         {
@@ -360,7 +386,12 @@ namespace PatientDoctorApp.Controllers
             ViewBag.PatientId = Url.ToString();
             return View();
         }
-
+        
+        /// <summary>
+        /// This method is used to schedule an appointment for the selected patient
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         public IActionResult Schedule()
         {
             var listOfLoggedInDoctorsAppointments = _context.Appointment.Where(m => m.DoctorId == _context.Users.Where(n => n.Email == User.Identity.Name).FirstOrDefault().Id).ToList();
@@ -402,6 +433,7 @@ namespace PatientDoctorApp.Controllers
         /// </summary>
         /// <param name="appointmentt"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public IActionResult Schedule(Appointment appointmentt)
         {
@@ -421,6 +453,7 @@ namespace PatientDoctorApp.Controllers
         /// </summary>
         /// <param name="appointmentt"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public IActionResult CancelAppointment(Appointment appointmentt)
         {
@@ -440,6 +473,7 @@ namespace PatientDoctorApp.Controllers
         /// </summary>
         /// <param name="appointmentt">Appointment object</param>
         /// <returns>Redirects to the Doctor's Schedule Screen</returns>
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public IActionResult ConfirmAppointment(Appointment appointmentt)
         {
@@ -459,6 +493,7 @@ namespace PatientDoctorApp.Controllers
         /// </summary>
         /// <param name="appointmentt"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public IActionResult CompleteAppointment(Appointment appointmentt)
         {
@@ -479,6 +514,7 @@ namespace PatientDoctorApp.Controllers
         /// <returns>
         /// The view of all the documents of the selected patient.
         /// </returns>
+        [Authorize(Roles = "Doctor")]
         public IActionResult SelectedPatientViewDocuments()
         {
             var Url = Request.Query["PatientId"];

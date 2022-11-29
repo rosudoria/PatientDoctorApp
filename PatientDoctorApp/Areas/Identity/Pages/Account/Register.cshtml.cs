@@ -31,13 +31,15 @@ namespace PatientDoctorApp.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<PatientDoctorAppUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<PatientDoctorAppUser> userManager,
             IUserStore<PatientDoctorAppUser> userStore,
             SignInManager<PatientDoctorAppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +47,8 @@ namespace PatientDoctorApp.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            
+            _roleManager = roleManager;
         }
 
         public class GenderModel
@@ -177,6 +181,24 @@ namespace PatientDoctorApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    if (user.Role == "Patient")
+                    {
+                        var roleExists = await _roleManager.RoleExistsAsync("Patient");
+                        if (!roleExists)
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("Patient"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "Patient");
+                    }
+                    else
+                    {
+                        var roleExists = await _roleManager.RoleExistsAsync("Doctor");
+                        if (!roleExists)
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("Doctor"));
+                        }
+                        await _userManager.AddToRoleAsync(user, "Doctor");
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
