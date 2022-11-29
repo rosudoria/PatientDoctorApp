@@ -40,7 +40,7 @@ namespace PatientDoctorApp.Models
         PENDING,
         ACCEPTED,
         CANCELLED,
-        COMPLEETED
+        COMPLETED
     }
 
     public enum AppointmentType
