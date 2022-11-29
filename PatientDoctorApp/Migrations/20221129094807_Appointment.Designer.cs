@@ -12,7 +12,7 @@ using PatientDoctorApp.Data;
 namespace PatientDoctorApp.Migrations
 {
     [DbContext(typeof(PatientDoctorAppContext))]
-    [Migration("20221129080230_Appointment")]
+    [Migration("20221129094807_Appointment")]
     partial class Appointment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

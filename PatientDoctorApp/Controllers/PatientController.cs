@@ -2,6 +2,7 @@
 using PatientDoctorApp.Data;
 using PatientDoctorApp.Models;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace PatientDoctorApp.Controllers
@@ -16,6 +17,7 @@ namespace PatientDoctorApp.Controllers
             _dbContext = dbContext;
         }
 
+        [Authorize(Roles = "Patient")]
         public IActionResult PatientIndex()
         {
             string email = User.Identity.Name;
@@ -24,6 +26,7 @@ namespace PatientDoctorApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpGet]
         public IActionResult RequestAppointment()
         {
@@ -58,6 +61,7 @@ namespace PatientDoctorApp.Controllers
             return View("RequestAppointment", new Appointment());
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpPost]
         public IActionResult RequestAppointment(Appointment appointment)
         {
@@ -77,6 +81,7 @@ namespace PatientDoctorApp.Controllers
             return View("PatientIndex");
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpGet]
         public IActionResult ViewAppointments()
         {
@@ -89,7 +94,8 @@ namespace PatientDoctorApp.Controllers
             ViewBag.Doctors = _dbContext.Users.Where(u => u.Role.Contains("Doctor")).ToList();
             return View();
         }
-
+        
+        [Authorize(Roles = "Patient")]
         public IActionResult PatientProfile()
         {
             return View();
