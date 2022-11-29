@@ -27,7 +27,9 @@ namespace PatientDoctorApp.Controllers
         [Authorize(Roles = "Doctor")]
         public IActionResult DoctorProfile()
         {
-            return View();
+            var currentUserEmail = User.Identity.Name;
+            var currentUser = _context.Users.Where(m => m.Email == currentUserEmail).FirstOrDefault();
+            return View(currentUser);
         }
         
         /// <summary>
