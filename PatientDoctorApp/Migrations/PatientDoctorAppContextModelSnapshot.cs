@@ -249,9 +249,12 @@ namespace PatientDoctorApp.Migrations
 
             modelBuilder.Entity("PatientDoctorApp.Models.Appointment", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AppointmentType")
                         .IsRequired()
@@ -312,8 +315,11 @@ namespace PatientDoctorApp.Migrations
 
             modelBuilder.Entity("PatientDoctorApp.Models.Document", b =>
                 {
-                    b.Property<string>("DocumentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("DocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentId"), 1L, 1);
 
                     b.Property<string>("AppointmentId")
                         .HasMaxLength(255)

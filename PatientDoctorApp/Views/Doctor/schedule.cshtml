@@ -1,6 +1,4 @@
-﻿@*
-    
-*@
+﻿@model Appointment
 @{
     ViewData["Title"] = "Doctors Schedule";
 }
@@ -23,59 +21,59 @@
     </ul>
     <div class="tab-content col-6 offset-3" id="myTabContent">
         <div class="tab-pane fade show active overflow-auto" id="Today" role="tabpanel" aria-labelledby="Today-tab">
-            <div class="accordion col-6 offset-3" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                         9:00am John Doe
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                         Appointment details here
+                @for(int i = 0; i < ViewBag.listOfConfirmedAppointments.Count; i++)
+                {
+                    if (ViewBag.listOfConfirmedAppointments[i].Date.Date == DateTime.Today.Date)
+                    {
+                        <div class="accordion-item" style="{
+                            width: 60%;
+                        }" >
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfConfirmedAppointments[i].Id" aria-expanded="true"
+                                        aria-controls="collapse-@ViewBag.listOfConfirmedAppointments[i].Id"
+                                >
+                                
+                                    @ViewBag.listOfConfirmedAppointmentsNames[i]
+                                </button>
+                            </h2>
+                            <div id="collapse-@ViewBag.listOfConfirmedAppointments[i].Id" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
+                                <div class="accordion-body">
+                                    <p>
+                                        <b>Type: </b> @ViewBag.listOfConfirmedAppointments[i].AppointmentType <br />
+                                        <b>Reason: </b> @ViewBag.listOfConfirmedAppointments[i].Reason <br />
+                                        <b>Details(Optional): </b> @ViewBag.listOfConfirmedAppointments[i].Details <br />
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                         10:00am John Cena
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
+                    }
+                }
         </div>
-    </div>
     <div class="tab-pane fade overflow-auto" id="Tomorrow" role="tabpanel" aria-labelledby="Tomorrow-tab">
         <div class="accordion col-6 offset-3" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                     1:00pm John Doever
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingFour">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                     2:00pm Senna Queena
-                    </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                     Appointment details here
-                    </div>
-                </div>
-            </div>
+            @for(int i = 0; i < ViewBag.listOfConfirmedAppointments.Count; i++){
+               if (ViewBag.listOfConfirmedAppointments[i].Date.Date == DateTime.Today.AddDays(1).Date){
+                  <div class="accordion-item" style="{
+                     width: 60%;
+                  }" >
+                      <h2 class="accordion-header" id="headingOne">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@ViewBag.listOfConfirmedAppointments[i].Id" aria-expanded="true"
+                                  aria-controls="collapse-@ViewBag.listOfConfirmedAppointments[i].Id">
+                              @ViewBag.listOfConfirmedAppointmentsNames[i]
+                          </button>
+                      </h2>
+                      <div id="collapse-@ViewBag.listOfConfirmedAppointments[i].Id" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionTestReports">
+                          <div class="accordion-body">
+                              <p>
+                                  <b>Type: </b> @ViewBag.listOfConfirmedAppointments[i].AppointmentType <br/>
+                                  <b>Reason: </b> @ViewBag.listOfConfirmedAppointments[i].Reason <br/>
+                                  <b>Details(Optional): </b> @ViewBag.listOfConfirmedAppointments[i].Details <br/>
+                              </p>
+                          </div>
+                      </div>
+                      </div>
+               }
+            }
         </div>
     </div>
     <div class="tab-pane fade overflow-auto" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
@@ -85,11 +83,38 @@
             <span id="startDateSelected"></span>
         </div>
     </div>
-    <div class="tab-pane fade overflow-auto" id="requests" role="tabpanel" aria-labelledby="requests-tab">
-        <button onclick="alertPending()" class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-warning">Pending</span></button>
-        <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-success">Approved</span></a>
-        <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-danger">Canceled</span></a>
-    </div>
+        <div class="tab-pane fade overflow-auto" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+            @foreach (Appointment pendingAppointment in ViewBag.listOfPendingAppointments)
+            {
+                <form asp-controller="Doctor" asp-action="Schedule" method="post">
+                    <a class="btn">@pendingAppointment.Date.Date.ToShortDateString()  @pendingAppointment.TimeSlot - @pendingAppointment.Id
+                        <span class="btn badge bg-warning">
+                            <input type="hidden" value=@pendingAppointment.Id asp-for="Id"/>
+                            <input type="hidden" value=@pendingAppointment.Date asp-for="Date"/>
+                            <input type="hidden" value=@pendingAppointment.TimeSlot asp-for="TimeSlot"/>
+                            <input type="hidden" value=@pendingAppointment.PatientId asp-for="PatientId"/>
+                            <input type="hidden" value=@pendingAppointment.DoctorId asp-for="DoctorId"/>
+                            <input type="hidden" value=@pendingAppointment.Status asp-for="Status"/>
+                            <input type="hidden" value=@pendingAppointment.Reason asp-for="Reason"/>
+                            <input type="hidden" value=@pendingAppointment.MSPNumber asp-for="MSPNumber"/>
+                            <input type="hidden" value=@pendingAppointment.AppointmentType asp-for="AppointmentType"/>
+                            <input type="hidden" value=@pendingAppointment.Phone asp-for="Phone"/>
+                            <input type="hidden" value=@pendingAppointment.Email asp-for="Email"/>
+                            <input type="hidden" value=@pendingAppointment.Details asp-for="Details"/>
+                            <button type="submit">Pending</button>
+                            
+                        </span>
+                    </a>
+                </form>
+                
+                
+                
+                <br/>
+            }
+            @*<button onclick="aprovePending()" class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-warning">Pending</span></button>
+            <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-success">Approved</span></a>
+            <a class="btn">11-02-2022 9:30pm Spider man <span class="btn badge bg-danger">Canceled</span></a>*@
+        </div>
     </div>
 </div>
 

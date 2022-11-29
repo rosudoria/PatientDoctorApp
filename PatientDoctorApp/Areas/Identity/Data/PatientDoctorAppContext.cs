@@ -74,6 +74,7 @@ public class DoctorPatientAppDocumentEntityConfiguration : IEntityTypeConfigurat
     /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Document> builder)
     {
+        builder.Property(d => d.DocumentId).ValueGeneratedOnAdd();
         builder.Property(d => d.DoctorId).HasMaxLength(255);
         builder.Property(d => d.AppointmentId).HasMaxLength(255);
         builder.Property(d => d.PatientId).HasMaxLength(255);

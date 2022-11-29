@@ -1,17 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PatientDoctorApp.Models
 {
     public class Appointment
     {
+        [Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required(ErrorMessage = "Unique ID")]
+        public int Id { get; set; }
         public string? MSPNumber { get; set; }
         public string? Details { get; set; }
 
         [Required(ErrorMessage = "Reason for visting is required")]
         public string Reason { get; set; }
-
-        [Required(ErrorMessage = "Unique ID")]
-        public string Id { get; set; }
 
         [Required(ErrorMessage = "Patient ID required")]
         public string PatientId { get; set; }

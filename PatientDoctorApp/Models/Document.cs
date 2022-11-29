@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.Data.SqlClient;
 
 namespace PatientDoctorApp.Models;
 
@@ -7,7 +9,8 @@ namespace PatientDoctorApp.Models;
 /// </summary>
 public class Document
 {
-    public string? DocumentId { get; set; }
+    [Key][DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+    public int DocumentId { get; set; }
     public string? DoctorId { get; set; }
     /*
     public enum DocumentType { TestReport, Note, Diagnosis }
@@ -41,7 +44,7 @@ public class Document
     public int SaveDocument()
     {
         SqlConnection con = new SqlConnection(GetConnection.GetSqlConnection());
-        string query = "INSERT INTO Document (DocumentId, DoctorId, PatientId, AppointmentId, Date, type, Note,  TestName, TestDate, TestResult, FilePathTestReport, ConditionStatus, Prescriptions, Remarks) VALUES (@DocumentId, @DoctorId, @PatientId, @AppointmentId, @Date, @type, @Note, @TestName, @TestDate, @TestResult, @FilePathTestReport, @ConditionStatus, @Prescriptions, @Remarks)";
+        string query = "INSERT INTO Document ( DoctorId, PatientId, AppointmentId, Date, type, Note,  TestName, TestDate, TestResult, FilePathTestReport, ConditionStatus, Prescriptions, Remarks) VALUES ( @DoctorId, @PatientId, @AppointmentId, @Date, @type, @Note, @TestName, @TestDate, @TestResult, @FilePathTestReport, @ConditionStatus, @Prescriptions, @Remarks)";
         SqlCommand cmd = new SqlCommand(query, con);
         SqlParameter DocumentId =  cmd.Parameters.AddWithValue("@DocumentId", this.DocumentId);
         if (DocumentId.Value == null)
