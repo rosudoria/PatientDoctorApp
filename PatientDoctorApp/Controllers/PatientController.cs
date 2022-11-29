@@ -54,18 +54,27 @@ namespace PatientDoctorApp.Controllers
                 "17:00"
             };
 
+            var request = new RequestAppointment
+            {
+                PatientId = _dbContext.Users.Where(u => u.Email.Contains(email)).ToList()[0].Id,
+                Appointment = new Appointment(),
+                TimeSlots = new TimeSlots(),
+                DoctorList = _dbContext.Users.Where(u => u.Role.Contains("Doctor")).ToList()
+            };
+
             ViewBag.TimeSlots = listOfTimes;
-            return View("RequestAppointment", new Appointment());
+            //return View("RequestAppointment", new Appointment());
+            return View("RequestAppointment", request);
         }
 
         [HttpPost]
-        public IActionResult RequestAppointment(Appointment appointment)
+        public IActionResult RequestAppointment(RequestAppointment request)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _dbContext.Appointment.Add(appointment);
+                    _dbContext.Appointment.Add(request.Appointment);
                     _dbContext.SaveChanges();
                     return RedirectToAction("PatientIndex");
                 }
@@ -74,7 +83,16 @@ namespace PatientDoctorApp.Controllers
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
-            return View("PatientIndex");
+
+            string email = User.Identity.Name;
+            var newRequest = new RequestAppointment
+            {
+                PatientId = _dbContext.Users.Where(u => u.Email.Contains(email)).ToList()[0].Id,
+                Appointment = new Appointment(),
+                TimeSlots = new TimeSlots(),
+                DoctorList = _dbContext.Users.Where(u => u.Role.Contains("Doctor")).ToList()
+            };
+            return View(newRequest);
         }
 
         [HttpGet]

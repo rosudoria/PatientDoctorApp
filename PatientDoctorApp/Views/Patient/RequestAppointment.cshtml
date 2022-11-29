@@ -1,5 +1,5 @@
 ﻿@using PatientDoctorApp.Areas.Identity.Data
-@model Appointment
+@model RequestAppointment
 @{
     ViewData["Title"] = "Request Appointment";
 }
@@ -7,6 +7,7 @@
 <div class="text-center">
     <h1 class="display-4">Request an Appointment</h1>
     <form asp-action="RequestAppointment" asp-controller="Patient" id="appointmentForm" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
@@ -18,7 +19,7 @@
                     <div class="accordion-body">
                         <div class="row g-3 align-items-center">
                             <div class="form-floating col-sm-5">
-                                <input asp-for="MSPNumber" id="inputMSP" class="form-control"/>
+                                <input asp-for="@Model.Appointment.MSPNumber" id="inputMSP" class="form-control"/>
                                 <label for="inputMSP">Enter Your MSP Number</label>
                             </div>
                             <div class="col-auto">
@@ -38,14 +39,14 @@
                     <div class="accordion-body">
                         <div class="row g-3 align-items-center">
                             <div class="col-auto">
-                                <select asp-for="AppointmentType" class="form-select" aria-label="Default select example">
+                                <select asp-for="@Model.Appointment.AppointmentType" class="form-select" aria-label="Default select example">
                                     <option selected>SELECT AN APPOINTMENT TYPE</option>
                                     <option value="IN-PERSON">IN-PERSON</option>
                                     <option value="ONLINE">ONLINE</option>
                                 </select>
                             </div>
                             <div class="col-auto">
-                                <select asp-for="Reason" class="form-select" aria-label="Default select example">
+                                <select asp-for="@Model.Appointment.Reason" class="form-select" aria-label="Default select example">
                                     <option selected>SELECT AN APPOINTMENT REASON</option>
                                     <option value="RESULTS">RESULTS</option>
                                     <option value="FOLLOW-UP">FOLLOW-UP</option>
@@ -53,15 +54,15 @@
                                 </select>
                             </div>
                             <div class="form-floating">
-                                <input asp-for="Details" id="inputAddMsg" class="form-control"/>
+                                <input asp-for="@Model.Appointment.Details" id="inputAddMsg" class="form-control"/>
                                 <label for="inputAddMsg">Additional Message (Optional)</label>
                             </div>
                             <div class="form-floating col-sm-5">
-                                <input asp-for="Email" id="inputEmail" class="form-control"/>
+                                <input asp-for="@Model.Appointment.Email" id="inputEmail" class="form-control"/>
                                 <label for="inputEmail">Enter Email address</label>
                             </div>
                             <div class="form-floating col-sm-5">
-                                <input asp-for="Phone" id="inputPhoneNum" class="form-control"/>
+                                <input asp-for="@Model.Appointment.Phone" id="inputPhoneNum" class="form-control"/>
                                 <label for="inputPhoneNum">Enter PhoneNumber</label>
                             </div>
                             <div class="col-auto">
@@ -82,14 +83,14 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-sm-5">
                                 <label for="startDate">Select Date</label>
-                                <input asp-for="Date" id="startDate" class="form-control" type="date" />
+                                <input asp-for="@Model.Appointment.Date" id="startDate" class="form-control" type="date"/>
                                 <span id="startDateSelected"></span>
                             </div>
                             <div class="col-sm-5">
                                 <label form="startTime">Select Time</label>
-                                <select asp-for="TimeSlot" class="form-select" aria-label="Default select example">
+                                <select asp-for="@Model.Appointment.TimeSlot" class="form-select" aria-label="Default select example">
                                     <option selected>SELECT A TIME SLOT</option>
-                                    @foreach  (string time in ViewBag.TimeSlots)
+                                    @foreach  (string time in @Model.TimeSlots.Times)
                                     { <option value="@time">@time</option>}
                                 </select>
                                 @*<input type="time" class="form-control" value="10:05 AM" />*@
@@ -111,9 +112,9 @@
                     <div class="accordion-body">
                         <div class="row g-3 align-items-center">
                             <div class="col-auto">
-                                <select asp-for="DoctorId" class="form-select" aria-label="Default select example">
+                                <select asp-for="@Model.Appointment.DoctorId" class="form-select" aria-label="Default select example">
                                     <option selected>SELECT A DOCTOR</option>
-                                    @foreach (PatientDoctorAppUser d in ViewBag.Doctors)
+                                    @foreach (PatientDoctorAppUser d in @Model.DoctorList)
                                     { <option value="@d.Id">Dr.@d.LastName</option>}
                                 </select>
                             </div>
@@ -132,8 +133,8 @@
                 </h2>
                 <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <input type="hidden" value="@ViewBag.PatientId" asp-for="PatientId" />
-                        <input type="hidden" value="PENDING" asp-for="Status" />
+                        <input value="@Model.PatientId" asp-for="@Model.Appointment.PatientId" />
+                        <input type="hidden" value="PENDING" asp-for="@Model.Appointment.Status" />
                         <button id="appointmentSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
                     </div>
                 </div>

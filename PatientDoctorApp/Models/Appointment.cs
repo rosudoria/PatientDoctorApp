@@ -28,8 +28,9 @@ namespace PatientDoctorApp.Models
 
         public string Email { get; set; }
 
+        [Required(ErrorMessage="Please enter a phone number!")]
         public string Phone { get; set; }
-
+        
         public DateTime Date { get; set; }
 
         public string TimeSlot { get; set; }
