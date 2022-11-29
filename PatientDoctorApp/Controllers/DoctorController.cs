@@ -79,7 +79,7 @@ namespace PatientDoctorApp.Controllers
             var PatientsDOB = PatientDoctorAppUser.DateOfBirth;
             
             //Get List of all the Appointments for the patient
-            var AppointmentList = _context.Appointment.OrderBy(m => m.PatientId).ToList();
+            var AppointmentList = _context.Appointment.OrderBy(m => m.PatientId).Where(m => m.Status == "PENDING" || m.Status == "CONFIRMED").ToList().OrderBy(m=>m.Date);
             var ListOfAppointments = new List<Appointment>();
             foreach (var appointments in AppointmentList)
             {
@@ -88,13 +88,17 @@ namespace PatientDoctorApp.Controllers
                     ListOfAppointments.Add(appointments);
                 }
             }
-            Appointment LatestAppointment = ListOfAppointments.LastOrDefault();
+            Appointment LatestAppointment = ListOfAppointments.FirstOrDefault();
             var DoctorId = "";
             var DoctorsName = "";
             if (LatestAppointment != null)
             {
                 DoctorId = LatestAppointment.DoctorId;
                 DoctorsName = "Dr. " + _context.Users.Find(DoctorId).FirstName + " " + _context.Users.Find(DoctorId).LastName;
+            }
+            else
+            {
+                LatestAppointment = new Appointment();
             }
             
 
@@ -125,9 +129,6 @@ namespace PatientDoctorApp.Controllers
             
             return View(viewModel);
         }
-        /*{
-            return View();
-        }*/
         
         /// <summary>
         /// This is the get method to display the type of documents to be uploaded.
@@ -363,28 +364,108 @@ namespace PatientDoctorApp.Controllers
         public IActionResult Schedule()
         {
             var listOfLoggedInDoctorsAppointments = _context.Appointment.Where(m => m.DoctorId == _context.Users.Where(n => n.Email == User.Identity.Name).FirstOrDefault().Id).ToList();
-            var listOfPendingAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "PENDING" || m.Status == "CANCELLED" ).ToList();
+            var listOfPendingAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "PENDING" ).ToList().OrderBy(m=>m.Date).ToList();
             ViewBag.listOfPendingAppointments = listOfPendingAppointments;
+            var listOfPendingAppoinmentsNames = new List<string>();
+            foreach (var appointment in listOfPendingAppointments)
+            {
+                string name = _context.Users.Where(m => m.Id == appointment.PatientId).FirstOrDefault().FirstName + " " + _context.Users.Where(m => m.Id == appointment.PatientId).FirstOrDefault().LastName;
+                listOfPendingAppoinmentsNames.Add(name);
+            }
+            ViewBag.listOfPendingAppoinmentsNames = listOfPendingAppoinmentsNames;
+            
+            
             var listOfConfirmedAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "CONFIRMED").ToList();
             ViewBag.listOfConfirmedAppointments = listOfConfirmedAppointments;
             var listOfConfirmedAppointmentsNames = new List<string>();
             foreach (var confirmedAppointment in listOfConfirmedAppointments)
             {
-               string name = _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().FirstName.ToString() + _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().LastName.ToString();
+               string name = _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().FirstName.ToString() + " " + _context.Users.Where(m => m.Id == confirmedAppointment.PatientId).FirstOrDefault().LastName.ToString();
                listOfConfirmedAppointmentsNames.Add(name);
             }
             ViewBag.listOfConfirmedAppointmentsNames = listOfConfirmedAppointmentsNames;
-            
+            var listOfCancelledAppointments = listOfLoggedInDoctorsAppointments.Where(m => m.Status == "CANCELLED" || m.Status=="COMPLETED").ToList();
+            ViewBag.listOfCancelledAppointments = listOfCancelledAppointments;
+            var listOfCancelledAppointmentsNames = new List<string>();
+            foreach (var cancelledAppointment in listOfCancelledAppointments)
+            {
+                string name = _context.Users.Where(m => m.Id == cancelledAppointment.PatientId).FirstOrDefault().FirstName.ToString() + " " + _context.Users.Where(m => m.Id == cancelledAppointment.PatientId).FirstOrDefault().LastName.ToString();
+                listOfCancelledAppointmentsNames.Add(name);
+            }
+            ViewBag.listOfCancelledAppointmentsNames = listOfCancelledAppointmentsNames;
+
             return View();
         }
         
+        /// <summary>
+        /// Post method to confirm the appointment
+        /// </summary>
+        /// <param name="appointmentt"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Schedule(Appointment appointmentId)
+        public IActionResult Schedule(Appointment appointmentt)
         {
-            var appointment = _context.Appointment.Where(m => m.Id == appointmentId.Id).FirstOrDefault();
+            var appointment = _context.Appointment.Where(m => m.Id == appointmentt.Id).FirstOrDefault();
             if (appointment != null)
             {
                 appointment.Status = "CONFIRMED";
+                _context.Appointment.Update(appointment);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Schedule", "Doctor");
+        }
+        
+        /// <summary>
+        /// Post method to cancel the appointment
+        /// </summary>
+        /// <param name="appointmentt"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult CancelAppointment(Appointment appointmentt)
+        {
+            var appointment = _context.Appointment.Where(m => m.Id == appointmentt.Id).FirstOrDefault();
+            if (appointment != null)
+            {
+                appointment.Status = "CANCELLED";
+                _context.Appointment.Update(appointment);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Schedule", "Doctor");
+        }
+        
+        /// <summary>
+        /// This method is used to confirm the selected patient's appointment
+        /// </summary>
+        /// <param name="appointmentt">Appointment object</param>
+        /// <returns>Redirects to the Doctor's Schedule Screen</returns>
+        [HttpPost]
+        public IActionResult ConfirmAppointment(Appointment appointmentt)
+        {
+            var appointment = _context.Appointment.Where(m => m.Id == appointmentt.Id).FirstOrDefault();
+            if (appointment != null)
+            {
+                appointment.Status = "CONFIRMED";
+                _context.Appointment.Update(appointment);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Schedule", "Doctor");
+        }
+        
+        /// <summary>
+        /// This method is used to Complete the selected patient's appointment
+        /// </summary>
+        /// <param name="appointmentt"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult CompleteAppointment(Appointment appointmentt)
+        {
+            var appointment = _context.Appointment.Where(m => m.Id == appointmentt.Id).FirstOrDefault();
+            if (appointment != null)
+            {
+                appointment.Status = "COMPLETED";
                 _context.Appointment.Update(appointment);
             }
 
@@ -536,6 +617,9 @@ namespace PatientDoctorApp.Controllers
         }
     }
 
+    /// <summary>
+    /// This is the View model class for the SelectedPatientUploadDocument method.
+    /// </summary>
     public class SelectedPatientUploadDocumentsViewModel
     {
         public string Name { get; set; }
