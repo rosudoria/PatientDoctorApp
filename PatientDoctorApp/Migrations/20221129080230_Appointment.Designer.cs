@@ -12,8 +12,8 @@ using PatientDoctorApp.Data;
 namespace PatientDoctorApp.Migrations
 {
     [DbContext(typeof(PatientDoctorAppContext))]
-    [Migration("20221129035346_ChangeAppointmentIdTypeToInt")]
-    partial class ChangeAppointmentIdTypeToInt
+    [Migration("20221129080230_Appointment")]
+    partial class Appointment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

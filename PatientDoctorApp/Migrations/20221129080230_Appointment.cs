@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PatientDoctorApp.Migrations
 {
-    public partial class ChangeAppointmentIdTypeToInt : Migration
+    public partial class Appointment : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
