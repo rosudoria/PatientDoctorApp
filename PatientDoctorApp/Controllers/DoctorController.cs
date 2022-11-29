@@ -210,6 +210,20 @@ namespace PatientDoctorApp.Controllers
                 PatientsLatestDiagnosis = null;
             }
             
+            var listOfAppointments = _context.Appointment.OrderBy(m => m.PatientId).Where(m => m.Status == "PENDING" || m.Status == "CONFIRMED").ToList().Where(m => m.PatientId == PatientId).OrderBy(m=>m.Date);
+            var earliestAppointment = listOfAppointments.FirstOrDefault();
+            var DoctorsName = "";
+            if (earliestAppointment != null)
+            {
+                var DoctorId = earliestAppointment.DoctorId;
+                DoctorsName = "Dr. " + _context.Users.Find(DoctorId).FirstName + " " + _context.Users.Find(DoctorId).LastName;
+            }
+            else
+            {
+                earliestAppointment = new Appointment();
+            }
+            ViewBag.EarliestAppointment = earliestAppointment;
+            ViewBag.DoctorsName = DoctorsName;
             var viewModel = new SelectedPatientUploadDocumentsViewModel(PatientName, PatientAge, PatientsLatestTestReport, PatientsLatestNote, PatientsLatestDiagnosis);
 
             return View(viewModel);
