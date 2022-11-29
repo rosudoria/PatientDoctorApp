@@ -1,4 +1,5 @@
-﻿@{
+﻿@using PatientDoctorApp.Areas.Identity.Data
+@{
     ViewData["Title"] = "Patient Page";
 }
 
@@ -37,20 +38,30 @@
            <button class="btn btn-primary">View</button>
        </div>
       </div>
-     <div class="container col-6">
-      <div class="card">
-      <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
-      <div class="card-body">
+      @if (@ViewBag.NextAppointment != null)
+      {
+        <div class="container col-6">
+        <div class="card">
+        <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="...">
+        <div class="card-body">
         <h5 class="card-title">Upcomming Appointment</h5>
-                <p class="card-text">type: IN-PERSON</p>
-        <p class="card-text">Date: 2022-11-01</p>
-        <p class="card-text">Time: 1:30pm - 2:30pm</p>
-        <p class="card-text">Doctor: Dr.Ross Geller</p>
-        <p class="card-text">Details: Second-degree burn</p>
+        <p class="card-text">Status: @ViewBag.NextAppointment.Status</p>
+        <p class="card-text">type: @ViewBag.NextAppointment.AppointmentType</p>
+        <p class="card-text">Date: @ViewBag.NextAppointment.Date.ToShortDateString()</p>
+        <p class="card-text">Time: @ViewBag.NextAppointment.TimeSlot</p>
+        @foreach (PatientDoctorAppUser u in ViewBag.Doctors)
+        {
+            if (u.Id == @ViewBag.NextAppointment.DoctorId)
+            {
+                <p class="card-text">Doctor: Dr.@u.LastName</p>
+            }
+        }
+        <p class="card-text">Details: @ViewBag.Details</p>
         <a href="#" class="btn btn-danger">Cancel</a>
-      </div>
-     </div>
-     </div>
+        </div>
+        </div>
+        </div>
+      }
     </div>
 </div>
 

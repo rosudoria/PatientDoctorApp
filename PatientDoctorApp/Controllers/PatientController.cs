@@ -18,6 +18,9 @@ namespace PatientDoctorApp.Controllers
 
         public IActionResult PatientIndex()
         {
+            string email = User.Identity.Name;
+            ViewBag.Doctors = _dbContext.Users.Where(u => u.Role.Contains("Doctor")).ToList();
+            ViewBag.NextAppointment =_dbContext.Appointment.Where( u => u.Email.Contains(email)).OrderBy(d => d.Date).FirstOrDefault();
             return View();
         }
 
