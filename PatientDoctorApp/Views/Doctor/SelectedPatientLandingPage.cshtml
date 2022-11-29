@@ -211,8 +211,8 @@
     <div class="div2">
         <div id="NextMeetingWithPatientCard">
             <h4 id="NextMeetingHeading">Next Meeting</h4>
-            @*<p id="NextMeetingDate">Date: @Model.Appointment.Date.Date.ToShortDateString() <br/> Time: @Model.Appointment.TimeSlot</p>
-            <p id="MeetingConfirmation"><b>@Model.Appointment.Status</b></p>*@
+            <p id="NextMeetingDate">Date: @Model.Appointment.Date.Date.ToShortDateString() <br/> Time: @Model.Appointment.TimeSlot</p>
+            <p id="MeetingConfirmation"><b>@Model.Appointment.Status</b></p>
             <p id="DoctorAssigned">@Model.DoctorsName</p>
         </div>
     </div>
@@ -242,9 +242,7 @@
         <div id="PatientRequests">
             <h3 id="PatientRequestHeading">Requests</h3>
             <p id="PatientRequestParagraph">
-                @*
                 @Model.Appointment.Details
-            *@
             </p>
         </div>
         <div id="ButtonGroup">
