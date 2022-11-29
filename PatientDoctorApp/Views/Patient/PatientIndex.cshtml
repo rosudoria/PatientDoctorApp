@@ -13,10 +13,10 @@
              <img id="profile-picture" src="https://cdn.discordapp.com/attachments/533825420391350272/1000245210959323156/unknown.png">
            </div>
            <p>
-               <span id="name">Swaggapino</span><br/>
-               <span>Detail 1</span><br/>
-               <span>Detail 2</span><br/>
-               <span>Detail 3</span><br/>
+               <span id="name">@ViewBag.Me.FirstName @ViewBag.Me.LastName</span><br/>
+               <span>@ViewBag.Me.DateOfBirth.ToShortDateString()</span><br/>
+               <span>@ViewBag.Me.Gender</span><br/>
+               <span>@ViewBag.Me.Role</span><br/>
            </p>
        </div>
        <div id="appointment-container" class="container">
@@ -57,7 +57,7 @@
             }
         }
         <p class="card-text">Details: @ViewBag.Details</p>
-        <a href="#" class="btn btn-danger">Cancel</a>
+        @*<a href="#" class="btn btn-danger">Cancel</a>*@
         </div>
         </div>
         </div>

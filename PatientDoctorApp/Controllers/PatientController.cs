@@ -22,7 +22,8 @@ namespace PatientDoctorApp.Controllers
         {
             string email = User.Identity.Name;
             ViewBag.Doctors = _dbContext.Users.Where(u => u.Role.Contains("Doctor")).ToList();
-            ViewBag.NextAppointment =_dbContext.Appointment.Where( u => u.Email.Contains(email)).OrderBy(d => d.Date).FirstOrDefault();
+            ViewBag.NextAppointment =_dbContext.Appointment.Where( u => u.Email.Contains(email) && (u.Status.Contains("PENDING") || u.Status.Contains("CONFIRMED"))).OrderBy(d => d.Date).FirstOrDefault();
+            ViewBag.Me = _dbContext.Users.Where( u => u.Email.Contains(email)).ToList()[0];
             return View();
         }
 
